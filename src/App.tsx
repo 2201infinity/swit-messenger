@@ -6,8 +6,8 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        첫 셋팅
         <GlobalStyles />
+        <MainPage />
       </div>
     </ThemeProvider>
   );
