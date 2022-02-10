@@ -1,13 +1,15 @@
-import React from "react";
-import GlobalStyles from "styles/GlobalStyles";
-import MainPage from "pages/MainPage";
-
+import React from 'react';
+import GlobalStyles from 'styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
+import theme from 'styles/theme';
 function App() {
   return (
-    <>
-      <GlobalStyles />
-      <MainPage />
-    </>
+    <ThemeProvider theme={theme}>
+      <div>
+        <GlobalStyles />
+        <MainPage />
+      </div>
+    </ThemeProvider>
   );
 }
 
