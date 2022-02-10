@@ -40,8 +40,6 @@ const StyledButton = styled.button<ButtonStyledProps>`
   height: ${({ height }) => height};
   border-radius: ${({ borderRadius }) => borderRadius};
   font-size: ${({ theme }) => theme.fontSize.text};
-  box-sizing: border-box;
-  transition: 0.15s ease-in-out;
 
   ${({ variant }) => {
     switch (variant) {
