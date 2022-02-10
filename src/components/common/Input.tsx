@@ -32,6 +32,7 @@ const StyledInput = styled.input<{ borderRadius: string }>`
   padding: 5px 10px;
   border-radius: ${({ borderRadius }) => borderRadius};
   outline: none;
+  border: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 export default Input;
