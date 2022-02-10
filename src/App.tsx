@@ -1,12 +1,15 @@
-import React from "react";
-import GlobalStyles from "styles/GlobalStyles";
-
+import React from 'react';
+import GlobalStyles from 'styles/GlobalStyles';
+import { ThemeProvider } from 'styled-components';
+import theme from 'styles/theme';
 function App() {
   return (
-    <div>
-      첫 셋팅
-      <GlobalStyles />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div>
+        첫 셋팅
+        <GlobalStyles />
+      </div>
+    </ThemeProvider>
   );
 }
 
