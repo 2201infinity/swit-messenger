@@ -11,6 +11,7 @@ import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
 import Header from "components/Header";
+import { scrollbar } from "styles/utilStyles";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -90,8 +91,9 @@ export const ChatRoom = () => {
 const ChatRoomBox = styled.div`
   background-color: transparent;
   padding: 24px 24px 0;
-  overflow: scroll;
+  overflow-y: scroll;
   flex-grow: 1;
+  ${scrollbar}
 `;
 
 const MessageBox = styled.div<{ isMyMessage: boolean }>`

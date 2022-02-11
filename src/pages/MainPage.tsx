@@ -1,4 +1,3 @@
-import Header from "components/Header";
 import styled from "styled-components";
 import { ChatRoom } from "components/messenger/ChatRoom";
 
@@ -27,13 +26,9 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  background-color: #ffebee;
+  background-color: ${({ theme }) => theme.colors.lightRed};
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 export default MainPage;

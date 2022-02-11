@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
@@ -10,7 +10,6 @@ export default function useMessenger() {
   const [content, setContent] = useState<string>("");
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -33,7 +32,7 @@ export default function useMessenger() {
     setContent("");
     setTimeout(() => {
       scrollToBottom();
-    }, 100);
+    }, 10);
   };
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
