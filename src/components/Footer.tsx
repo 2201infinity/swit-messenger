@@ -12,7 +12,7 @@ function Footer() {
 export default Footer;
 
 const FooterContainer = styled.div`
-  height: 65px;
+  height: 64px;
   width: 420px;
   position: fixed;
   bottom: 0;

@@ -5,6 +5,7 @@ import { Button } from "./common/Button";
 function MessageInput() {
   const [content, setContent] = useState("");
   const [btnStatus, setBtnStatus] = useState(true);
+  const [messageList, setMessageList] = useState<string[]>([]);
 
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
@@ -12,18 +13,18 @@ function MessageInput() {
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    메세지보내기();
+    sendMessage();
   };
 
-  const 메세지보내기 = () => {
+  const sendMessage = () => {
     if (content.length > 0) {
-      console.log("메세지 입력 완료"); // 다른 컴포넌트로 데이터 넘겨주기
+      setMessageList([...messageList, content]);
       setContent("");
     }
   };
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" ? 메세지보내기() : console.log("null");
+    e.key === "Enter" ? sendMessage() : console.log("null");
   };
 
   useEffect(() => {
@@ -32,6 +33,9 @@ function MessageInput() {
 
   return (
     <InputContainer>
+      {messageList.map((item) => (
+        <div key={`message_list_${item}`}>{item}</div>
+      ))}
       <Form>
         <InputText
           onChange={onChange}
@@ -56,6 +60,8 @@ export default MessageInput;
 
 const InputContainer = styled.div`
   width: 380px;
+  position: fixed;
+  bottom: 12px;
 `;
 const InputText = styled.textarea`
   all: unset;
