@@ -6,13 +6,21 @@ import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import { useState } from "react";
+import MessageInput from "components/MessageInput";
 
 export const ChatRoom = () => {
   // const user = useSelector(userSelecter);
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
-  const { message, messages, onChangeMessage, onDeleteMessage, onSendMessage } =
-    useMessenger();
+  const {
+    content,
+    messages,
+    onChangeMessage,
+    onDeleteMessage,
+    onSendMessage,
+    onKeyPress,
+    onSubmitMessage,
+  } = useMessenger();
 
   const userId = 999888; // @Todo 로그인 구현 되면 redux에 userId 값 가져와서 넣어야함
 
@@ -27,34 +35,43 @@ export const ChatRoom = () => {
   };
 
   return (
-    <ChatRoomBox>
-      {messages.map((msg: IMessage) => {
-        const { userName, profileImage, date, content } = msg;
-        return (
-          <div key={`${userName}_${content}`}>
-            <MessageBox isMyMessage={msg.userId === userId}>
-              <ImageBox imageSrc={profileImage} />
-              <Message myMessage={false}>{content}</Message>
-              <span>{date}</span>
-              <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
-            </MessageBox>
-          </div>
-        );
-      })}
-      {/** 임시 form */}
-      <form onSubmit={onSendMessage}>
-        <input type="text" value={message} onChange={onChangeMessage} />
-      </form>
+    <>
+      <ChatRoomBox>
+        {messages.map((msg: IMessage) => {
+          const { userName, profileImage, date, content } = msg;
+          return (
+            <div key={`${userName}_${content}`}>
+              <MessageBox isMyMessage={msg.userId === userId}>
+                <ImageBox imageSrc={profileImage} />
+                <Message myMessage={false}>{content}</Message>
+                <span>{date}</span>
+                <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
+              </MessageBox>
+            </div>
+          );
+        })}
 
-      {isDeleteModal && selectedMessage && (
-        <MessageDeleteModal
-          isModal={isDeleteModal}
-          onToggleModal={onToggleDeleteModal}
-          onClick={() => onCompleteDelete(selectedMessage.id)}
-          content={selectedMessage.content}
-        />
-      )}
-    </ChatRoomBox>
+        {/* <form onSubmit={onSendMessage}>
+        <input type="text" value={message} onChange={onChangeMessage} />
+      </form> */}
+
+        {isDeleteModal && selectedMessage && (
+          <MessageDeleteModal
+            isModal={isDeleteModal}
+            onToggleModal={onToggleDeleteModal}
+            onClick={() => onCompleteDelete(selectedMessage.id)}
+            content={selectedMessage.content}
+          />
+        )}
+      </ChatRoomBox>
+      <MessageInput
+        messages={messages}
+        onKeyPress={onKeyPress}
+        content={content}
+        onChangeMessage={onChangeMessage}
+        onSubmitMessage={onSubmitMessage}
+      />
+    </>
   );
 };
 

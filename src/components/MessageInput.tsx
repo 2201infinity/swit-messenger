@@ -1,57 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Button } from "./common/Button";
+import { IMessage } from "types/message";
 
-function MessageInput() {
-  const [content, setContent] = useState("");
-  const [btnStatus, setBtnStatus] = useState(true);
-  const [messageList, setMessageList] = useState<string[]>([]);
+interface MessageInputProps {
+  messages: IMessage[];
+  onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  content: string;
+  onChangeMessage: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmitMessage: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+}
 
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-  };
+function MessageInput({
+  messages,
+  onKeyPress,
+  content,
+  onChangeMessage,
+  onSubmitMessage,
+}: MessageInputProps) {
+  // const [content, setContent] = useState("");
+  // const [messageList, setMessageList] = useState<string[]>([]);
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    sendMessage();
-  };
+  // const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   setContent(e.target.value);
+  // };
 
-  const sendMessage = () => {
-    if (content.length > 1) {
-      setMessageList([...messageList, content]);
-      setContent("");
-    } else {
-      setContent("");
-    }
-  };
+  // const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  //   e.key === "Enter" ? sendMessage() : console.log(null);
+  // };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" ? sendMessage() : console.log(null);
-  };
+  // const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+  //   sendMessage();
+  // };
 
-  useEffect(() => {
-    content.length === 0 ? setBtnStatus(true) : setBtnStatus(false);
-  }, [content]);
+  // const sendMessage = () => {
+  //   if (content.trim().length === 0) return;
+  //   setMessageList([...messageList, content]);
+  //   setContent("");
+  // };
 
   return (
     <InputContainer>
-      {messageList.map((item, index) => (
+      {messages.map((item, index) => (
         <Message key={`message_list_${index}`}>{item}</Message>
       ))}
       <Form>
         <InputText
-          onChange={onChange}
+          onChange={onChangeMessage}
           onKeyPress={onKeyPress}
           value={content}
         ></InputText>
         <Button
           variant="primary"
-          width="50px"
+          width="55px"
           height="40px"
-          onClick={onClick}
-          disabled={btnStatus}
+          onClick={onSubmitMessage}
+          disabled={content.length === 0}
         >
-          전송
+          보내기
         </Button>
       </Form>
     </InputContainer>
@@ -60,15 +67,31 @@ function MessageInput() {
 
 export default MessageInput;
 
+// const FooterContainer = styled.div`
+//   height: 64px;
+//   width: 420px;
+//   position: fixed;
+//   bottom: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #ff1744;
+// `;
+
 const InputContainer = styled.div`
-  width: 380px;
+  height: 64px;
+  width: 420px;
   position: fixed;
-  bottom: 12px;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ff1744;
 `;
 const InputText = styled.textarea`
   all: unset;
   width: 320px;
-  height: 30px;
+  height: 100px;
   box-sizing: border-box;
   border: solid 2px #ffffff;
   border-radius: 5px;
@@ -87,4 +110,8 @@ const Message = styled.form`
   padding: 5px;
   margin: 2px;
   border-radius: 5px;
+`;
+
+const EditorContainer = styled.div`
+  width: 400px;
 `;
