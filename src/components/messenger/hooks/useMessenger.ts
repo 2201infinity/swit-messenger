@@ -20,7 +20,7 @@ export default function useMessenger() {
         userName,
         profileImage,
         date: getCurrentDate(),
-        content: content,
+        content: content.replace(/(\n|\r\n)/g, "<br />"),
       },
     ]);
     setContent("");
@@ -31,8 +31,8 @@ export default function useMessenger() {
     onSendMessage();
   };
 
-  const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" ? onSendMessage() : console.log(null);
+  const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    e.key === "Enter" && !e.shiftKey ? onSendMessage() : console.log(null);
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -49,7 +49,7 @@ export default function useMessenger() {
     onChangeMessage,
     onSendMessage,
     onDeleteMessage,
-    onKeyPress,
+    onKeyUp,
     onSubmitMessage,
   };
 }

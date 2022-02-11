@@ -19,7 +19,7 @@ export const ChatRoom = () => {
     messages,
     onChangeMessage,
     onDeleteMessage,
-    onKeyPress,
+    onKeyUp,
     onSubmitMessage,
   } = useMessenger();
 
@@ -41,7 +41,6 @@ export const ChatRoom = () => {
 
   useEffect(() => {
     scrollToBottom();
-    console.log("나 지금 작동 하고 있나 ?");
   }, [messages]);
 
   return (
@@ -59,7 +58,7 @@ export const ChatRoom = () => {
                     <span>{date}</span>
                   </UserName>
                   <Message myMessage={msg.userId === user.userId}>
-                    {content}
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
                 </MessageContainer>
                 <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
@@ -80,7 +79,7 @@ export const ChatRoom = () => {
       </ChatRoomBox>
       <MessageInput
         messages={messages}
-        onKeyPress={onKeyPress}
+        onKeyUp={onKeyUp}
         content={content}
         onChangeMessage={onChangeMessage}
         onSubmitMessage={onSubmitMessage}
