@@ -2,37 +2,54 @@ import React, { useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
+import { useSelector } from "react-redux";
+import { userSelecter } from "stores/user";
 
 export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
-  const [message, setMessage] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const { userId, profileImage, userName } = useSelector(userSelecter);
 
-  // @Note 임시로 만든 메세지 보내는 함수 입니다. 나중에 예지님이 구현하신 코드로 대체할 예정입니다~
-  const onSendMessage = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (message.trim().length > 0) {
-      setMessages([
-        ...messages,
-        {
-          id: Date.now(),
-          userId: 999888,
-          userName: "도도도",
-          profileImage: "https://i.ibb.co/LNw3QCV/image.png",
-          content: message,
-          date: getCurrentDate(),
-        },
-      ]);
-      setMessage("");
-    }
+  const onSendMessage = () => {
+    if (content.trim().length === 0) return;
+    setMessages([
+      ...messages,
+      {
+        id: Date.now(),
+        userId,
+        userName,
+        profileImage,
+        date: getCurrentDate(),
+        content: content.replace(/(\n|\r\n)/g, "<br />"),
+      },
+    ]);
+    setContent("");
   };
 
-  const onChangeMessage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(e.target.value);
+  const onSubmitMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    onSendMessage();
+  };
+
+  const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    e.key === "Enter" && !e.shiftKey ? onSendMessage() : console.log(null);
+  };
+
+  const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setContent(e.target.value);
   };
 
   const onDeleteMessage = (messageId: number) => {
     setMessages(messages.filter((message) => message.id !== messageId));
   };
 
-  return { messages, message, onChangeMessage, onSendMessage, onDeleteMessage };
+  return {
+    messages,
+    content,
+    onChangeMessage,
+    onSendMessage,
+    onDeleteMessage,
+    onKeyUp,
+    onSubmitMessage,
+  };
 }

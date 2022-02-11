@@ -1,7 +1,6 @@
-import Footer from 'components/Footer';
-import Header from 'components/Header';
-import styled from 'styled-components';
-import { ChatRoom } from 'components/messenger/ChatRoom';
+import Header from "components/Header";
+import styled from "styled-components";
+import { ChatRoom } from "components/messenger/ChatRoom";
 
 function MainPage() {
   return (
@@ -11,7 +10,6 @@ function MainPage() {
         <Content>
           <ChatRoom />
         </Content>
-        <Footer />
       </MainLayout>
     </MainContainer>
   );

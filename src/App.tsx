@@ -1,7 +1,7 @@
 import React from "react";
 import GlobalStyles from "styles/GlobalStyles";
-import { ThemeProvider } from "styled-components";
 import { Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 import theme from "styles/theme";
 import MainPage from "pages/MainPage";
 import LoginPage from "pages/LoginPage";
