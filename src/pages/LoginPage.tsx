@@ -4,8 +4,8 @@ import { Button } from "components/common/Button";
 import Input from "components/common/Input";
 import { setUser } from "stores/user";
 import { useDispatch } from "react-redux";
-import dance from "assets/images/dance.png";
-import logo from "assets/images/logo.png";
+import { DanceImg } from "assets/images";
+import { LogoImg } from "assets/images";
 import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
@@ -38,13 +38,13 @@ function LoginPage() {
   return (
     <Container>
       <Content>
-        <Logo src={logo} alt="logo" />
+        <Logo src={LogoImg} alt="logo" />
         <h1>
           업무 최적화를 돕는
           <br />
           Work OS 올인원 협업툴
         </h1>
-        <DanceImg src={dance} alt="dance-image" />
+        <StyledImg src={DanceImg} alt="dance-image" />
         <form onSubmit={onEnter}>
           <StyledInput
             width={"260px"}
@@ -90,7 +90,7 @@ const Logo = styled.img`
   width: 140px;
   margin-bottom: 15px;
 `;
-const DanceImg = styled.img`
+const StyledImg = styled.img`
   border-radius: 15px;
   width: 260px;
   margin-bottom: 30px;
