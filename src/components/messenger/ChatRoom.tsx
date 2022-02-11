@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
+import { DeleteIcon, ReplyIcon } from "assets/icons";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -55,12 +56,19 @@ export const ChatRoom = () => {
                 <UserName>
                   {userName}
                   <span>{date}</span>
-                  <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
-                  <button onClick={() => onReplyMessage(msg)}>답장</button>
                 </UserName>
-                <Message myMessage={msg.userId === user.userId}>
-                  <div dangerouslySetInnerHTML={{ __html: content }} />
-                </Message>
+
+                <FlexBox>
+                  <Message myMessage={msg.userId === user.userId}>
+                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                  </Message>
+                  <MessageButton onClick={() => onClickDeleteButton(msg)}>
+                    <DeleteIcon />
+                  </MessageButton>
+                  <MessageButton onClick={() => onReplyMessage(msg)}>
+                    <ReplyIcon />
+                  </MessageButton>
+                </FlexBox>
               </MessageContainer>
             </MessageBox>
           );
@@ -108,13 +116,22 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
   flex-direction: ${(props) => (props.isMyMessage ? "row-reverse" : "row")};
   align-items: flex-start;
   margin-bottom: 20px;
-  flex-wrap: wrap;
   span {
     width: ${(props) => (props.isMyMessage ? "auto" : "100%")};
     font-size: ${({ theme }) => theme.fontSize.smallText};
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
   }
+`;
+
+const MessageButton = styled.button`
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 6px;
+`;
+
+const FlexBox = styled.div`
+  display: flex;
 `;
 
 const UserName = styled.p`
