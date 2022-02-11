@@ -25,7 +25,7 @@ function MessageDeleteModal({
       onToggleModal={onToggleModal}
     >
       <DeleteModalInner>
-        {content.substring(0, 10)}
+        {content.replace("<br />", "").substring(0, 10)}
         {isElipsis && "..."} 메세지를 삭제하시겠습니까?
         <div>
           <button onClick={onClick}>삭제</button>
