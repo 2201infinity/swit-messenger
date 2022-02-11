@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
+import { getCurrentDate } from "utils/date";
 
 export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
@@ -16,10 +17,7 @@ export default function useMessenger() {
           userName: "도도도",
           profileImage: "https://i.ibb.co/LNw3QCV/image.png",
           content: message,
-          date: new Date(+new Date() + 3240 * 10000)
-            .toISOString()
-            .replace("T", " ")
-            .replace(/\..*/, ""),
+          date: getCurrentDate(),
         },
       ]);
       setMessage("");
