@@ -49,7 +49,7 @@ function MessageInput() {
           width="50px"
           height="40px"
           onClick={onClick}
-          disabled={btnStatus}
+          disabled={btnStatus}  
         >
           전송
         </Button>
