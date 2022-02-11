@@ -14,10 +14,17 @@ function LoginPage() {
 
   const [name, setName] = useState<string>("");
 
-  const onInputName = (e: any) => {
+  const onInputName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
   const onEnter = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (name.length === 0) {
+      alert("이름을 입력해주세요");
+      return;
+    }
+
     const body = {
       userName: name,
       userId: Math.random(),
@@ -25,12 +32,7 @@ function LoginPage() {
         "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
     };
     dispatch(setUser(body));
-
-    if (name !== "") {
-      navigate("/main");
-    } else {
-      alert("이름을 입력해주세요!");
-    }
+    navigate("/main");
   };
 
   return (
@@ -43,15 +45,17 @@ function LoginPage() {
           Work OS 올인원 협업툴
         </h1>
         <DanceImg src={dance} alt="dance-image" />
-        <StyledInput
-          width={"260px"}
-          height={"40px"}
-          onChange={onInputName}
-          placeholder="이름을 입력하세요"
-        />
-        <Button variant={"secondary"} width={"260px"} onClick={onEnter}>
-          입장
-        </Button>
+        <form onSubmit={onEnter}>
+          <StyledInput
+            width={"260px"}
+            height={"40px"}
+            onChange={onInputName}
+            placeholder="이름을 입력하세요"
+          />
+          <Button variant={"secondary"} width={"260px"}>
+            입장하기
+          </Button>
+        </form>
       </Content>
     </Container>
   );
