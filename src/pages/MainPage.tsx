@@ -1,13 +1,16 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
 import styled from "styled-components";
+import { ChatRoom } from "components/messenger/ChatRoom";
 
 function MainPage() {
   return (
     <MainContainer>
       <MainLayout>
         <Header />
-        <Content>this is main{/* 메인 영역  */}</Content>
+        <Content>
+          <ChatRoom />
+        </Content>
         <Footer />
       </MainLayout>
     </MainContainer>
@@ -27,7 +30,6 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  text-align: center;
   padding-top: 65px;
   background-color: #ffebee;
 `;

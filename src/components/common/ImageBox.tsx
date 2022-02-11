@@ -1,11 +1,13 @@
-import React from "react";
-import styled from "styled-components";
-import { IMessage } from "types/message";
+import React from 'react';
+import styled from 'styled-components';
 
-function ImageBox() {
+interface IImageSrcProps {
+  imageSrc: string;
+}
+function ImageBox({ imageSrc }: IImageSrcProps) {
   return (
     <Container>
-      <img src="https://i.ibb.co/LNw3QCV/image.png" alt="profileImage" />
+      <img src={imageSrc} alt="profileImage" />
     </Container>
   );
 }
