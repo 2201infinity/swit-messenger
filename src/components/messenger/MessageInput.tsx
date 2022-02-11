@@ -1,22 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "../common/Button";
-import { IMessage } from "types/message";
 
 interface MessageInputProps {
-  messages: IMessage[];
   onKeyUp: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   content: string;
   onChangeMessage: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSubmitMessage: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  textAreaRef: React.RefObject<HTMLTextAreaElement>;
 }
 
 function MessageInput({
-  messages,
   onKeyUp,
   content,
   onChangeMessage,
   onSubmitMessage,
+  textAreaRef,
 }: MessageInputProps) {
   return (
     <InputContainer>
@@ -25,6 +24,7 @@ function MessageInput({
           onChange={onChangeMessage}
           onKeyUp={onKeyUp}
           value={content}
+          ref={textAreaRef}
         />
         <Button
           variant="primary"
@@ -43,7 +43,7 @@ function MessageInput({
 export default MessageInput;
 
 const InputContainer = styled.div`
-  height: 64px;
+  height: 130px;
   width: 420px;
   position: fixed;
   bottom: 0;
@@ -55,11 +55,11 @@ const InputContainer = styled.div`
 const InputText = styled.textarea`
   all: unset;
   width: 320px;
-  height: 50px;
+  height: 100px;
   box-sizing: border-box;
   border: solid 2px #ffffff;
   border-radius: 5px;
-  font-size: 19dpx;
+  font-size: 19px;
   resize: none;
   overflow: hidden;
   margin-right: 10px;

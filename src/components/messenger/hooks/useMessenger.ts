@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
@@ -9,6 +9,8 @@ export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
   const { userId, profileImage, userName } = useSelector(userSelecter);
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const onSendMessage = () => {
     if (content.trim().length === 0) return;
@@ -43,13 +45,27 @@ export default function useMessenger() {
     setMessages(messages.filter((message) => message.id !== messageId));
   };
 
+  const onReplyMessage = (message: IMessage) => {
+    const body = `${message.userName}
+${message.content}
+(회신)
+`;
+    setContent((prev) => body + prev);
+    textAreaRef.current?.focus();
+  };
+
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
+
   return {
     messages,
     content,
     onChangeMessage,
-    onSendMessage,
     onDeleteMessage,
     onKeyUp,
     onSubmitMessage,
+    onReplyMessage,
+    textAreaRef,
   };
 }

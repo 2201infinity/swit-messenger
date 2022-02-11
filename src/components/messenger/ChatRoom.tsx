@@ -22,6 +22,8 @@ export const ChatRoom = () => {
     onDeleteMessage,
     onKeyUp,
     onSubmitMessage,
+    onReplyMessage,
+    textAreaRef,
   } = useMessenger();
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
@@ -59,12 +61,13 @@ export const ChatRoom = () => {
                 <UserName>
                   {userName}
                   <span>{date}</span>
+                  <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
+                  <button onClick={() => onReplyMessage(msg)}>답장</button>
                 </UserName>
                 <Message myMessage={msg.userId === user.userId}>
                   <div dangerouslySetInnerHTML={{ __html: content }} />
                 </Message>
               </MessageContainer>
-              <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
             </MessageBox>
           );
         })}
@@ -80,11 +83,11 @@ export const ChatRoom = () => {
         )}
       </ChatRoomBox>
       <MessageInput
-        messages={messages}
         onKeyUp={onKeyUp}
         content={content}
         onChangeMessage={onChangeMessage}
         onSubmitMessage={onSubmitMessage}
+        textAreaRef={textAreaRef}
       />
     </>
   );
