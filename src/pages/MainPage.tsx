@@ -6,7 +6,6 @@ function MainPage() {
   return (
     <MainContainer>
       <MainLayout>
-        <Header />
         <Content>
           <ChatRoom />
         </Content>
@@ -28,8 +27,9 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  padding: 65px 0 60px;
   background-color: #ffebee;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;

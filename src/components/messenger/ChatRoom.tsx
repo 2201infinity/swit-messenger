@@ -6,10 +6,11 @@ import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
+import Header from "components/Header";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -21,12 +22,11 @@ export const ChatRoom = () => {
     onChangeMessage,
     onDeleteMessage,
     onKeyUp,
-    onSubmitMessage,
+    onSendMessage,
     onReplyMessage,
     textAreaRef,
+    messagesEndRef,
   } = useMessenger();
-
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const onClickDeleteButton = (message: IMessage) => {
     setSelectedMessage(message);
@@ -38,16 +38,9 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   return (
     <>
+      <Header />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id } = msg;
@@ -82,11 +75,12 @@ export const ChatRoom = () => {
           />
         )}
       </ChatRoomBox>
+
       <MessageInput
         onKeyUp={onKeyUp}
         content={content}
         onChangeMessage={onChangeMessage}
-        onSubmitMessage={onSubmitMessage}
+        onSendMessage={onSendMessage}
         textAreaRef={textAreaRef}
       />
     </>
@@ -96,8 +90,8 @@ export const ChatRoom = () => {
 const ChatRoomBox = styled.div`
   background-color: transparent;
   padding: 24px 24px 0;
-  display: flex;
-  flex-direction: column;
+  overflow: scroll;
+  flex-grow: 1;
 `;
 
 const MessageBox = styled.div<{ isMyMessage: boolean }>`

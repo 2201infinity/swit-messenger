@@ -19,7 +19,7 @@ const HeaderContainer = styled.div`
   padding: 0 40px;
   width: 420px;
   height: 64px;
-  position: fixed;
+  min-height: 64px;
   background: linear-gradient(
     90deg,
     rgba(255, 100, 114, 1) 25%,

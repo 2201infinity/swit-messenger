@@ -9,10 +9,15 @@ export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
   const { userId, profileImage, userName } = useSelector(userSelecter);
-
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const onSendMessage = () => {
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const onSendMessage = async () => {
     if (content.trim().length === 0) return;
     setMessages([
       ...messages,
@@ -26,15 +31,13 @@ export default function useMessenger() {
       },
     ]);
     setContent("");
-  };
-
-  const onSubmitMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    onSendMessage();
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
   };
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" && !e.shiftKey ? onSendMessage() : console.log(null);
+    if (e.key === "Enter" && !e.shiftKey) onSendMessage();
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -54,18 +57,15 @@ ${message.content}
     textAreaRef.current?.focus();
   };
 
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
-
   return {
     messages,
     content,
     onChangeMessage,
     onDeleteMessage,
     onKeyUp,
-    onSubmitMessage,
+    onSendMessage,
     onReplyMessage,
     textAreaRef,
+    messagesEndRef,
   };
 }
