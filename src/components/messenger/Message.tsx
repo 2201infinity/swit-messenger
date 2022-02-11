@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
 interface IMyMessageProps {
   myMessage?: boolean;
@@ -28,5 +28,5 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   padding: 17px 20px;
   border-radius: 6px;
   line-height: 1.5;
-  max-width: 280px;
+  max-width: 250px;
 `;
