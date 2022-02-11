@@ -6,7 +6,7 @@
       "profileImage": "https://i.ibb.co/LNw3QCV/image.png",
       "date": "2022-02-10 09:20:35",
       "content": "저희 미팅은 10시 어떠신가요?",
-      "status": "true"
+      "status": true
     },
     {
       "userId": 2,
@@ -14,7 +14,7 @@
       "profileImage": "https://i.ibb.co/DLRDn7h/image.png",
       "date": "2022-02-10 09:30:48",
       "content": "네 좋습니다. 현재 작업들 모두 취합하겠습니다",
-      "status": "true"
+      "status": true
     },
     {
       "userId": 3,
@@ -22,7 +22,7 @@
       "profileImage": "https://i.ibb.co/Hx4RLy8/image.png",
       "date": "2022-02-10 09:50:21",
       "content": "게더타운에서 뵙겠습니다.",
-      "status": "true"
+      "status": true
     },
     {
       "userId": 1,
@@ -30,7 +30,7 @@
       "profileImage": "https://i.ibb.co/LNw3QCV/image.png",
       "date": "2022-02-10 09:52:19",
       "content": "회의 목록 정리는 wiki에 공유하겠습니다.",
-      "status": "true"
+      "status": true
     },
     {
       "userId": 2,
@@ -38,7 +38,7 @@
       "profileImage": "https://i.ibb.co/DLRDn7h/image.png",
       "date": "2022-02-10 09:53:49",
       "content": "네 감사합니다:)",
-      "status": "true"
+      "status": true
     }
   ]
 }

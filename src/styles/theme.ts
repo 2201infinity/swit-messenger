@@ -6,7 +6,7 @@ const colors = {
   black: '#000000',
   gray: '#737376',
   myChatBackground: '#ff505f',
-  othersChatBackground: '#ffffff',
+  othersChatBackground: '#f5f5f5',
   button: '#ffe5e8',
   buttonHover: '#ff505f',
   border: '#E6E6E6',
