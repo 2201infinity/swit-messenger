@@ -25,10 +25,7 @@ function MessageInput({
       <Form>
         <InputBox>
           {replyContent.length > 0 && (
-            <ReplyContent
-              style={{ height: "30px" }}
-              dangerouslySetInnerHTML={{ __html: replyContent }}
-            />
+            <ReplyContent dangerouslySetInnerHTML={{ __html: replyContent }} />
           )}
           <InputText
             onChange={onChangeMessage}

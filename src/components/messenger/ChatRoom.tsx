@@ -144,6 +144,8 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
 
 const ReplyContent = styled.div`
   border-bottom: 1px solid #999;
+  padding: 10px 0;
+  margin-bottom: 10px;
 `;
 
 const MessageButton = styled.button`
