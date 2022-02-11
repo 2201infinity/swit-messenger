@@ -12,8 +12,8 @@ export default function useMessenger() {
       setMessages([
         ...messages,
         {
-          userId: Date.now(),
-          userName: "도현",
+          userId: 999888,
+          userName: "도도도",
           profileImage: "https://i.ibb.co/LNw3QCV/image.png",
           content: message,
           date: new Date().toLocaleString(),
