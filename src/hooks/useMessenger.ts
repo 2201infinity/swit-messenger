@@ -16,7 +16,10 @@ export default function useMessenger() {
           userName: "도도도",
           profileImage: "https://i.ibb.co/LNw3QCV/image.png",
           content: message,
-          date: new Date().toLocaleString(),
+          date: new Date(+new Date() + 3240 * 10000)
+            .toISOString()
+            .replace("T", " ")
+            .replace(/\..*/, ""),
         },
       ]);
       setMessage("");

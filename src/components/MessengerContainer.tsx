@@ -16,6 +16,7 @@ function MessengerContainer(): ReactElement {
             {msg.userId === 999888 && <span>*</span>}
           </span>
           <span>{msg.content}</span>
+          <span>{msg.date}</span>
         </div>
       ))}
 
