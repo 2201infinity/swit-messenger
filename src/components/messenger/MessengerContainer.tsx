@@ -1,4 +1,4 @@
-import useMessenger from "hooks/useMessenger";
+import useMessenger from "components/messenger/hooks/useMessenger";
 import React, { ReactElement } from "react";
 
 function MessengerContainer(): ReactElement {

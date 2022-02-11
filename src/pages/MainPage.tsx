@@ -1,6 +1,6 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
-import MessengerContainer from "components/MessengerContainer";
+import MessengerContainer from "components/messenger/MessengerContainer";
 import styled from "styled-components";
 
 function MainPage() {
