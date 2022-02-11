@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { scrollbar } from "styles/utilStyles";
 import { Button } from "../common/Button";
 
 interface MessageInputProps {
@@ -61,8 +62,8 @@ const InputText = styled.textarea`
   font-size: 14px;
   padding: 5px;
   resize: none;
-  overflow: hidden;
   margin-right: 10px;
+  ${scrollbar}
 `;
 const Form = styled.form`
   display: flex;

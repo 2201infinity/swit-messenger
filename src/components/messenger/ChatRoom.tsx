@@ -5,7 +5,7 @@ import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
 import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
@@ -62,8 +62,11 @@ export const ChatRoom = () => {
             >
               <ImageBox imageSrc={profileImage} />
               <MessageContainer isMyMessage={isMyMessage(userId)}>
-                <UserName>
-                  {userName}
+                <UserName className="usernameBox">
+                  <span className="name">
+                    {userName}
+                    {isMyMessage(userId) && <span>*</span>}
+                  </span>
                   <span>{date}</span>
                 </UserName>
                 <FlexBox myMessage={isMyMessage(userId)}>
@@ -125,7 +128,6 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
   align-items: flex-start;
   margin-bottom: 20px;
   span {
-    width: ${(props) => (props.isMyMessage ? "auto" : "100%")};
     font-size: ${({ theme }) => theme.fontSize.smallText};
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
@@ -146,10 +148,21 @@ const FlexBox = styled.div<{ myMessage: boolean }>`
 const UserName = styled.p`
   font-size: ${({ theme }) => theme.fontSize.smallText};
   margin: 0 0 5px 10px;
+  display: flex;
+  .name {
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.isMyMessage ? "flex-end" : "flex-start")};
+  ${({ isMyMessage }) =>
+    isMyMessage &&
+    css`
+      .usernameBox {
+        flex-direction: row-reverse;
+      }
+    `}
 `;
