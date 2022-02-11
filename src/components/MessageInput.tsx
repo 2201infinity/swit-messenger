@@ -18,39 +18,14 @@ function MessageInput({
   onChangeMessage,
   onSubmitMessage,
 }: MessageInputProps) {
-  // const [content, setContent] = useState("");
-  // const [messageList, setMessageList] = useState<string[]>([]);
-
-  // const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //   setContent(e.target.value);
-  // };
-
-  // const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-  //   e.key === "Enter" ? sendMessage() : console.log(null);
-  // };
-
-  // const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   e.preventDefault();
-  //   sendMessage();
-  // };
-
-  // const sendMessage = () => {
-  //   if (content.trim().length === 0) return;
-  //   setMessageList([...messageList, content]);
-  //   setContent("");
-  // };
-
   return (
     <InputContainer>
-      {messages.map((item, index) => (
-        <Message key={`message_list_${index}`}>{item}</Message>
-      ))}
       <Form>
         <InputText
           onChange={onChangeMessage}
           onKeyPress={onKeyPress}
           value={content}
-        ></InputText>
+        />
         <Button
           variant="primary"
           width="55px"
@@ -66,17 +41,6 @@ function MessageInput({
 }
 
 export default MessageInput;
-
-// const FooterContainer = styled.div`
-//   height: 64px;
-//   width: 420px;
-//   position: fixed;
-//   bottom: 0;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: #ff1744;
-// `;
 
 const InputContainer = styled.div`
   height: 64px;

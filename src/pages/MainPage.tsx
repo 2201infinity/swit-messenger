@@ -28,8 +28,12 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  padding-top: 65px;
+  padding: 65px 0 60px;
   background-color: #ffebee;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default MainPage;
