@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "./common/Button";
+import { Button } from "../common/Button";
 import { IMessage } from "types/message";
 
 interface MessageInputProps {

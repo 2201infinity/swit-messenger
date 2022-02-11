@@ -4,7 +4,7 @@ import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
-import MessageInput from "components/MessageInput";
+import MessageInput from "components/messenger/MessageInput";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { userSelecter } from "stores/user";
