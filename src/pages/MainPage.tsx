@@ -1,5 +1,6 @@
 import Footer from "components/Footer";
 import Header from "components/Header";
+import MessengerContainer from "components/MessengerContainer";
 import styled from "styled-components";
 
 function MainPage() {
@@ -7,7 +8,9 @@ function MainPage() {
     <MainContainer>
       <MainLayout>
         <Header />
-        <Content>this is main{/* 메인 영역  */}</Content>
+        <Content>
+          <MessengerContainer />
+        </Content>
         <Footer />
       </MainLayout>
     </MainContainer>
