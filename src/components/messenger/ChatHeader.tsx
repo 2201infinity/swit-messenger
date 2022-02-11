@@ -16,6 +16,7 @@ const HeaderContainer = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin-bottom: 7px;
   padding: 0 40px;
   width: 420px;
   height: 64px;
@@ -28,7 +29,6 @@ const HeaderContainer = styled.div`
   box-shadow: 1px 3px 5px 0px rgba(255, 80, 95, 0.7);
   -webkit-box-shadow: 1px 3px 5px 0px rgba(255, 80, 95, 0.7);
   -moz-box-shadow: 1px 3px 5px 0px rgba(255, 80, 95, 0.7);
-
   text-align: center;
   font-size: ${({ theme }) => theme.fontSize.text};
   color: ${({ theme }) => theme.colors.white};

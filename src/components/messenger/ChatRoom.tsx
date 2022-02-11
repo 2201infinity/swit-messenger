@@ -1,5 +1,5 @@
 import { Message } from "./Message";
-import React from "react";
+import React, { useEffect } from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
@@ -13,9 +13,11 @@ import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
+import { useNavigate } from "react-router-dom";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
+  const navigate = useNavigate();
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
   const {
@@ -40,26 +42,32 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
+  const isMyMessage = (userId: number) => userId === user.userId;
+
+  useEffect(() => {
+    if (!user.userId) navigate("/");
+  }, [user.userId, navigate]);
+
   return (
     <ChatRoomContainer>
       <ChatHeader />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
-          const { userName, profileImage, date, content, id } = msg;
+          const { userName, profileImage, date, content, id, userId } = msg;
+
           return (
             <MessageBox
-              isMyMessage={msg.userId === user.userId}
+              isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
               <ImageBox imageSrc={profileImage} />
-              <MessageContainer isMyMessage={msg.userId === user.userId}>
+              <MessageContainer isMyMessage={isMyMessage(userId)}>
                 <UserName>
                   {userName}
                   <span>{date}</span>
                 </UserName>
-
-                <FlexBox>
-                  <Message myMessage={msg.userId === user.userId}>
+                <FlexBox myMessage={isMyMessage(userId)}>
+                  <Message myMessage={isMyMessage(userId)}>
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
                   <MessageButton onClick={() => onClickDeleteButton(msg)}>
@@ -130,8 +138,9 @@ const MessageButton = styled.button`
   margin-bottom: 6px;
 `;
 
-const FlexBox = styled.div`
+const FlexBox = styled.div<{ myMessage: boolean }>`
   display: flex;
+  ${({ myMessage }) => myMessage && "flex-direction: row-reverse"}
 `;
 
 const UserName = styled.p`
