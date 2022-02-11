@@ -62,36 +62,41 @@ export const ChatRoom = () => {
               isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
-              <ImageBox imageSrc={profileImage} />
-              <MessageContainer isMyMessage={isMyMessage(userId)}>
-                <UserName className="usernameBox">
-                  <span className="name">
-                    {userName}
-                    {isMyMessage(userId) && <span>*</span>}
-                  </span>
-                  <span>{date}</span>
-                </UserName>
-                <FlexBox myMessage={isMyMessage(userId)}>
-                  <Message myMessage={isMyMessage(userId)}>
-                    {reply && reply.length > 0 && (
-                      <ReplyContent
-                        dangerouslySetInnerHTML={{ __html: reply }}
-                      />
-                    )}
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
-                  </Message>
-                  <MessageButton>
-                    <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
-                  </MessageButton>
-                  <MessageButton>
-                    <ReplyIcon onClick={() => onReplyMessage(msg)} />
-                  </MessageButton>
-                </FlexBox>
-              </MessageContainer>
+              {id !== 9999 ? (
+                <>
+                  <ImageBox imageSrc={profileImage} />
+                  <MessageContainer isMyMessage={isMyMessage(userId)}>
+                    <UserName className="usernameBox">
+                      <span className="name">
+                        {userName}
+                        {isMyMessage(userId) && <span>*</span>}
+                      </span>
+                      <span>{date}</span>
+                    </UserName>
+                    <FlexBox myMessage={isMyMessage(userId)}>
+                      <Message myMessage={isMyMessage(userId)}>
+                        {reply && reply.length > 0 && (
+                          <ReplyContent
+                            dangerouslySetInnerHTML={{ __html: reply }}
+                          />
+                        )}
+                        <div dangerouslySetInnerHTML={{ __html: content }} />
+                      </Message>
+                      <MessageButton>
+                        <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
+                      </MessageButton>
+                      <MessageButton>
+                        <ReplyIcon onClick={() => onReplyMessage(msg)} />
+                      </MessageButton>
+                    </FlexBox>
+                  </MessageContainer>
+                </>
+              ) : (
+                <JoinMessage>{content}</JoinMessage>
+              )}
             </MessageBox>
           );
         })}
-
         <div ref={messagesEndRef} />
         {isDeleteModal && selectedMessage && (
           <MessageDeleteModal
@@ -182,4 +187,15 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
         flex-direction: row-reverse;
       }
     `}
+`;
+
+const JoinMessage = styled.p`
+  margin: 0 auto;
+  font-size: ${({ theme }) => theme.fontSize.text};
+  /* background-color: ${({ theme }) => theme.colors.button}; */
+  background-color: rgba(255, 209, 216, 0.8);
+  color: ${({ theme }) => theme.colors.gray};
+  text-align: center;
+  padding: 10px 40px;
+  border-radius: 4px;
 `;

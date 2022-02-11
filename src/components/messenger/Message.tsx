@@ -20,7 +20,7 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
           margin-right: 10px;
         `
       : css`
-          background: ${({ theme }) => theme.colors.othersChatBackground};
+          background: ${({ theme }) => theme.colors.white};
           color: ${({ theme }) => theme.colors.black};
           margin-left: 10px;
         `}
@@ -29,4 +29,5 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   border-radius: 6px;
   line-height: 1.5;
   max-width: 250px;
+  margin-top: 5px;
 `;
