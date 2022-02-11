@@ -40,6 +40,13 @@ const StyledButton = styled.button<ButtonStyledProps>`
   height: ${({ height }) => height};
   border-radius: ${({ borderRadius }) => borderRadius};
   font-size: ${({ theme }) => theme.fontSize.text};
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: black;
+  }
 
   ${({ variant }) => {
     switch (variant) {

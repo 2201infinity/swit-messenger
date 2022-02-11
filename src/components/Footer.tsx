@@ -1,16 +1,23 @@
 import styled from "styled-components";
+import MessageInput from "./MessageInput";
 
 function Footer() {
-  return <FooterContainer>this is footer</FooterContainer>;
+  return (
+    <FooterContainer>
+      <MessageInput></MessageInput>
+    </FooterContainer>
+  );
 }
 
 export default Footer;
 
 const FooterContainer = styled.div`
-  height: 60px;
+  height: 64px;
   width: 420px;
   position: fixed;
   bottom: 0;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #ff1744;
 `;
