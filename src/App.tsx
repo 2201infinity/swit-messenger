@@ -7,10 +7,8 @@ import MainPage from "pages/MainPage";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <GlobalStyles />
-        <MainPage />
-      </div>
+      <GlobalStyles />
+      <MainPage />
     </ThemeProvider>
   );
 }

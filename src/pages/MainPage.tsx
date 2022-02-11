@@ -2,6 +2,7 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import MessengerContainer from "components/messenger/MessengerContainer";
 import styled from "styled-components";
+import { ChatRoom } from "components/ChatRoom";
 
 function MainPage() {
   return (
@@ -10,6 +11,7 @@ function MainPage() {
         <Header />
         <Content>
           <MessengerContainer />
+          <ChatRoom />
         </Content>
         <Footer />
       </MainLayout>
@@ -30,7 +32,6 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  text-align: center;
   padding-top: 65px;
   background-color: #ffebee;
 `;
