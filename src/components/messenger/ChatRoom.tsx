@@ -80,11 +80,11 @@ export const ChatRoom = () => {
                     )}
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
-                  <MessageButton onClick={() => onClickDeleteButton(msg)}>
-                    <DeleteIcon />
+                  <MessageButton>
+                    <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
                   </MessageButton>
-                  <MessageButton onClick={() => onReplyMessage(msg)}>
-                    <ReplyIcon />
+                  <MessageButton>
+                    <ReplyIcon onClick={() => onReplyMessage(msg)} />
                   </MessageButton>
                 </FlexBox>
               </MessageContainer>
@@ -152,6 +152,9 @@ const MessageButton = styled.button`
   display: flex;
   align-items: flex-end;
   margin-bottom: 6px;
+  svg {
+    cursor: pointer;
+  }
 `;
 
 const FlexBox = styled.div<{ myMessage: boolean }>`
