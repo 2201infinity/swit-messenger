@@ -5,9 +5,7 @@ function MainPage() {
   return (
     <MainContainer>
       <MainLayout>
-        <Content>
-          <ChatRoom />
-        </Content>
+        <ChatRoom />
       </MainLayout>
     </MainContainer>
   );
@@ -22,13 +20,6 @@ const MainContainer = styled.div`
 const MainLayout = styled.div`
   width: 420px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 10%);
-`;
-
-const Content = styled.div`
-  height: 100%;
-  background-color: ${({ theme }) => theme.colors.lightRed};
-  display: flex;
-  flex-direction: column;
 `;
 
 export default MainPage;

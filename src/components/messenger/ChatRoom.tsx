@@ -10,8 +10,8 @@ import { useState } from "react";
 import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
-import Header from "components/Header";
 import { scrollbar } from "styles/utilStyles";
+import ChatHeader from "components/messenger/ChatHeader";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -40,8 +40,8 @@ export const ChatRoom = () => {
   };
 
   return (
-    <>
-      <Header />
+    <ChatRoomContainer>
+      <ChatHeader />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id } = msg;
@@ -84,9 +84,16 @@ export const ChatRoom = () => {
         onSendMessage={onSendMessage}
         textAreaRef={textAreaRef}
       />
-    </>
+    </ChatRoomContainer>
   );
 };
+
+const ChatRoomContainer = styled.div`
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.lightRed};
+  display: flex;
+  flex-direction: column;
+`;
 
 const ChatRoomBox = styled.div`
   background-color: transparent;

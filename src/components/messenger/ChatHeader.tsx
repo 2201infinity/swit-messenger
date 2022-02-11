@@ -1,7 +1,7 @@
 import { Teamlogo } from "assets/images";
 import styled from "styled-components";
 
-function Header() {
+function ChatHeader() {
   return (
     <HeaderContainer>
       <img src={Teamlogo} alt="team-profile" />
@@ -10,7 +10,7 @@ function Header() {
   );
 }
 
-export default Header;
+export default ChatHeader;
 
 const HeaderContainer = styled.div`
   display: flex;
