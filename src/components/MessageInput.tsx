@@ -17,14 +17,16 @@ function MessageInput() {
   };
 
   const sendMessage = () => {
-    if (content.length > 0) {
+    if (content.length > 1) {
       setMessageList([...messageList, content]);
+      setContent("");
+    } else {
       setContent("");
     }
   };
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" ? sendMessage() : console.log("null");
+    e.key === "Enter" ? sendMessage() : console.log(null);
   };
 
   useEffect(() => {
@@ -33,8 +35,8 @@ function MessageInput() {
 
   return (
     <InputContainer>
-      {messageList.map((item) => (
-        <div key={`message_list_${item}`}>{item}</div>
+      {messageList.map((item, index) => (
+        <Message key={`message_list_${index}`}>{item}</Message>
       ))}
       <Form>
         <InputText
@@ -78,4 +80,11 @@ const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const Message = styled.form`
+  background-color: #ffffff;
+  padding: 5px;
+  margin: 2px;
+  border-radius: 5px;
 `;
