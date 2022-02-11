@@ -51,6 +51,7 @@ export default function useMessenger() {
     const body = `${message.userName}
 ${message.content}
 (회신)
+<hr />
 `;
     setContent((prev) => body + prev);
     textAreaRef.current?.focus();
