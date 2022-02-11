@@ -1,14 +1,17 @@
-import ImageBox from "../common/ImageBox";
 import { Message } from "./Message";
+import React from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
 import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
+import ImageBox from "../common/ImageBox";
+import { scrollbar } from "styles/utilStyles";
+import ChatHeader from "components/messenger/ChatHeader";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -20,10 +23,11 @@ export const ChatRoom = () => {
     onChangeMessage,
     onDeleteMessage,
     onKeyUp,
-    onSubmitMessage,
+    onSendMessage,
+    onReplyMessage,
+    textAreaRef,
+    messagesEndRef,
   } = useMessenger();
-
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const onClickDeleteButton = (message: IMessage) => {
     setSelectedMessage(message);
@@ -35,35 +39,30 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
   return (
-    <>
+    <ChatRoomContainer>
+      <ChatHeader />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id } = msg;
           return (
-            <div key={`${id}_${content}`}>
-              <MessageBox isMyMessage={msg.userId === user.userId}>
-                <ImageBox imageSrc={profileImage} />
-                <MessageContainer isMyMessage={msg.userId === user.userId}>
-                  <UserName>
-                    {userName}
-                    <span>{date}</span>
-                  </UserName>
-                  <Message myMessage={msg.userId === user.userId}>
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
-                  </Message>
-                </MessageContainer>
-                <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
-              </MessageBox>
-            </div>
+            <MessageBox
+              isMyMessage={msg.userId === user.userId}
+              key={`${id}_${content}`}
+            >
+              <ImageBox imageSrc={profileImage} />
+              <MessageContainer isMyMessage={msg.userId === user.userId}>
+                <UserName>
+                  {userName}
+                  <span>{date}</span>
+                  <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
+                  <button onClick={() => onReplyMessage(msg)}>답장</button>
+                </UserName>
+                <Message myMessage={msg.userId === user.userId}>
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </Message>
+              </MessageContainer>
+            </MessageBox>
           );
         })}
 
@@ -77,29 +76,38 @@ export const ChatRoom = () => {
           />
         )}
       </ChatRoomBox>
+
       <MessageInput
-        messages={messages}
         onKeyUp={onKeyUp}
         content={content}
         onChangeMessage={onChangeMessage}
-        onSubmitMessage={onSubmitMessage}
+        onSendMessage={onSendMessage}
+        textAreaRef={textAreaRef}
       />
-    </>
+    </ChatRoomContainer>
   );
 };
+
+const ChatRoomContainer = styled.div`
+  height: 100%;
+  background-color: ${({ theme }) => theme.colors.lightRed};
+  display: flex;
+  flex-direction: column;
+`;
 
 const ChatRoomBox = styled.div`
   background-color: transparent;
   padding: 24px 24px 0;
-  display: flex;
-  flex-direction: column;
+  overflow-y: scroll;
+  flex-grow: 1;
+  ${scrollbar}
 `;
 
 const MessageBox = styled.div<{ isMyMessage: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isMyMessage ? "row-reverse" : "row")};
   align-items: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
   span {
     width: ${(props) => (props.isMyMessage ? "auto" : "100%")};

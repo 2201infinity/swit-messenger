@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-const colors = {
+export const colors = {
   main: "#ff505f",
   white: "#ffffff",
   black: "#000000",
@@ -10,9 +10,11 @@ const colors = {
   button: "#ffe5e8",
   buttonHover: "#ff505f",
   border: "#E6E6E6",
+  lightRed: "#ffebee",
+  grayLight: "#d4d2cf",
 };
 
-const fontSize = {
+export const fontSize = {
   title: "20px",
   subTitle: "16px",
   text: "14px",

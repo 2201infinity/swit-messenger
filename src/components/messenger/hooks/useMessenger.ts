@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
@@ -9,8 +9,14 @@ export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
   const { userId, profileImage, userName } = useSelector(userSelecter);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const onSendMessage = () => {
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const onSendMessage = async () => {
     if (content.trim().length === 0) return;
     setMessages([
       ...messages,
@@ -24,15 +30,13 @@ export default function useMessenger() {
       },
     ]);
     setContent("");
-  };
-
-  const onSubmitMessage = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    onSendMessage();
+    setTimeout(() => {
+      scrollToBottom();
+    }, 10);
   };
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    e.key === "Enter" && !e.shiftKey ? onSendMessage() : console.log(null);
+    if (e.key === "Enter" && !e.shiftKey) onSendMessage();
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -43,13 +47,24 @@ export default function useMessenger() {
     setMessages(messages.filter((message) => message.id !== messageId));
   };
 
+  const onReplyMessage = (message: IMessage) => {
+    const body = `${message.userName}
+${message.content}
+(회신)
+`;
+    setContent((prev) => body + prev);
+    textAreaRef.current?.focus();
+  };
+
   return {
     messages,
     content,
     onChangeMessage,
-    onSendMessage,
     onDeleteMessage,
     onKeyUp,
-    onSubmitMessage,
+    onSendMessage,
+    onReplyMessage,
+    textAreaRef,
+    messagesEndRef,
   };
 }
