@@ -56,7 +56,7 @@ const ModalInner = styled.div<IModalInnerStyled>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   border-radius: 12px;
-  animation: ${transitions.fadeIn} 0.4s ease-in-out;
+  animation: ${transitions.popInFromBottom} 0.4s forwards ease-in-out;
 `;
 
 const ModalBackground = styled.div`

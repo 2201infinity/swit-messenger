@@ -13,6 +13,7 @@ export default function useMessenger() {
       setMessages([
         ...messages,
         {
+          id: Date.now(),
           userId: 999888,
           userName: "도도도",
           profileImage: "https://i.ibb.co/LNw3QCV/image.png",
@@ -28,5 +29,9 @@ export default function useMessenger() {
     setMessage(e.target.value);
   };
 
-  return { messages, message, onChangeMessage, onSendMessage };
+  const onDeleteMessage = (messageId: number) => {
+    setMessages(messages.filter((message) => message.id !== messageId));
+  };
+
+  return { messages, message, onChangeMessage, onSendMessage, onDeleteMessage };
 }

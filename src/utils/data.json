@@ -1,6 +1,7 @@
 {
   "messages": [
     {
+      "id": 1,
       "userId": 1,
       "userName": "기영",
       "profileImage": "https://i.ibb.co/LNw3QCV/image.png",
@@ -8,6 +9,7 @@
       "content": "저희 미팅은 10시 어떠신가요?"
     },
     {
+      "id": 2,
       "userId": 2,
       "userName": "도현",
       "profileImage": "https://i.ibb.co/DLRDn7h/image.png",
@@ -15,6 +17,7 @@
       "content": "네 좋습니다. 현재 작업들 모두 취합하겠습니다"
     },
     {
+      "id": 3,
       "userId": 3,
       "userName": "향수",
       "profileImage": "https://i.ibb.co/Hx4RLy8/image.png",
@@ -22,6 +25,7 @@
       "content": "게더타운에서 뵙겠습니다."
     },
     {
+      "id": 4,
       "userId": 1,
       "userName": "기영",
       "profileImage": "https://i.ibb.co/LNw3QCV/image.png",
@@ -29,6 +33,7 @@
       "content": "회의 목록 정리는 wiki에 공유하겠습니다."
     },
     {
+      "id": 5,
       "userId": 2,
       "userName": "도현",
       "profileImage": "https://i.ibb.co/DLRDn7h/image.png",
