@@ -5,4 +5,5 @@ export interface IMessage {
   profileImage: string;
   date: string;
   content: string;
+  reply?: string;
 }

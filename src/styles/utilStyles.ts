@@ -6,9 +6,6 @@ export const scrollbar = css`
     width: 10px;
     height: 10px;
   }
-  &::-webkit-scrollbar-track {
-    background-color: ${colors.lightRed};
-  }
   &::-webkit-scrollbar-thumb {
     background-color: ${colors.grayLight};
     border-radius: 10px;

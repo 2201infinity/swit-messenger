@@ -9,6 +9,7 @@ interface MessageInputProps {
   onChangeMessage: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSendMessage: () => void;
   textAreaRef: React.RefObject<HTMLTextAreaElement>;
+  replyContent: string;
 }
 
 function MessageInput({
@@ -17,16 +18,22 @@ function MessageInput({
   onChangeMessage,
   onSendMessage,
   textAreaRef,
+  replyContent,
 }: MessageInputProps) {
   return (
     <InputContainer>
       <Form>
-        <InputText
-          onChange={onChangeMessage}
-          onKeyUp={onKeyUp}
-          value={content}
-          ref={textAreaRef}
-        />
+        <InputBox>
+          {replyContent.length > 0 && (
+            <ReplyContent dangerouslySetInnerHTML={{ __html: replyContent }} />
+          )}
+          <InputText
+            onChange={onChangeMessage}
+            onKeyUp={onKeyUp}
+            value={content}
+            ref={textAreaRef}
+          />
+        </InputBox>
         <Button
           variant="primary"
           width="55px"
@@ -46,23 +53,39 @@ export default MessageInput;
 const InputContainer = styled.div`
   height: 100px;
   min-height: 100px;
-  width: 420px;
+  width: 100%;
   display: flex;
-  justify-content: center;
+  padding: 0 20px;
   align-items: center;
   background-color: #ff1744;
+  color: ${({ theme }) => theme.colors.white};
 `;
-const InputText = styled.textarea`
-  all: unset;
-  width: 320px;
+
+const InputBox = styled.div`
+  width: 420px;
   height: 75px;
-  box-sizing: border-box;
   border: solid 2px #ffffff;
   border-radius: 5px;
+  margin-right: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ReplyContent = styled.div`
+  height: 40px;
+  border-bottom: 1px solid #999;
+  padding: 5px;
+  font-size: 12px;
+`;
+
+const InputText = styled.textarea`
+  all: unset;
+  width: 416px;
+  flex: 1 0 auto;
+  box-sizing: border-box;
   font-size: 14px;
   padding: 5px;
   resize: none;
-  margin-right: 10px;
   ${scrollbar}
 `;
 const Form = styled.form`

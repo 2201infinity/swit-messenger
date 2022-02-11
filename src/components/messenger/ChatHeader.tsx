@@ -27,8 +27,9 @@ const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 7px;
+  padding: 0 40px;
+  width: 100%;
   padding-left: 13px;
-  width: 420px;
   height: 64px;
   min-height: 64px;
   background: linear-gradient(
@@ -57,7 +58,7 @@ const ChatRoomName = styled.div`
 `;
 
 const StyledIcon = styled(BackIcon)`
-  margin-right: 77px;
+  margin-right: 30px;
   width: 30px;
   height: 30px;
   cursor: pointer;

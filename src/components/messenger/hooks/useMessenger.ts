@@ -8,6 +8,7 @@ import { userSelecter } from "stores/user";
 export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
+  const [replyContent, setReplyContent] = useState<string>("");
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -27,9 +28,11 @@ export default function useMessenger() {
         profileImage,
         date: getCurrentDate(),
         content: content.replace(/(\n|\r\n)/g, "<br />"),
+        reply: replyContent,
       },
     ]);
     setContent("");
+    setReplyContent("");
     setTimeout(() => {
       scrollToBottom();
     }, 10);
@@ -48,12 +51,10 @@ export default function useMessenger() {
   };
 
   const onReplyMessage = (message: IMessage) => {
-    const body = `${message.userName}
-${message.content}
-(회신)
-<hr />
-`;
-    setContent((prev) => body + prev);
+    setReplyContent(`${message.userName}님에게 답장하기<br />
+                    ${message.content}<br />
+                    `);
+
     textAreaRef.current?.focus();
   };
 
@@ -67,5 +68,6 @@ ${message.content}
     onReplyMessage,
     textAreaRef,
     messagesEndRef,
+    replyContent,
   };
 }
