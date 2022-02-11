@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [name, setName] = useState<string>("");
 
   const onInputName = (e: any) => {
@@ -19,11 +20,17 @@ function LoginPage() {
   const onEnter = (e: FormEvent) => {
     const body = {
       userName: name,
-      userId: "",
-      profileImage: "",
+      userId: Math.random(),
+      profileImage:
+        "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
     };
     dispatch(setUser(body));
-    navigate("/main");
+
+    if (name !== "") {
+      navigate("/main");
+    } else {
+      alert("이름을 입력해주세요!");
+    }
   };
 
   return (
