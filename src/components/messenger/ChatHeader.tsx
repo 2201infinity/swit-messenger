@@ -18,7 +18,7 @@ const HeaderContainer = styled.div`
   align-items: center;
   margin-bottom: 7px;
   padding: 0 40px;
-  width: 420px;
+  width: 100%;
   height: 64px;
   min-height: 64px;
   background: linear-gradient(

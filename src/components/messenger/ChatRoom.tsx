@@ -30,6 +30,7 @@ export const ChatRoom = () => {
     onReplyMessage,
     textAreaRef,
     messagesEndRef,
+    replyContent,
   } = useMessenger();
 
   const onClickDeleteButton = (message: IMessage) => {
@@ -53,7 +54,8 @@ export const ChatRoom = () => {
       <ChatHeader />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
-          const { userName, profileImage, date, content, id, userId } = msg;
+          const { userName, profileImage, date, content, id, userId, reply } =
+            msg;
 
           return (
             <MessageBox
@@ -71,6 +73,11 @@ export const ChatRoom = () => {
                 </UserName>
                 <FlexBox myMessage={isMyMessage(userId)}>
                   <Message myMessage={isMyMessage(userId)}>
+                    {reply && reply.length > 0 && (
+                      <ReplyContent
+                        dangerouslySetInnerHTML={{ __html: reply }}
+                      />
+                    )}
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
                   <MessageButton onClick={() => onClickDeleteButton(msg)}>
@@ -102,6 +109,7 @@ export const ChatRoom = () => {
         onChangeMessage={onChangeMessage}
         onSendMessage={onSendMessage}
         textAreaRef={textAreaRef}
+        replyContent={replyContent}
       />
     </ChatRoomContainer>
   );
@@ -132,6 +140,10 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
   }
+`;
+
+const ReplyContent = styled.div`
+  border-bottom: 1px solid #999;
 `;
 
 const MessageButton = styled.button`

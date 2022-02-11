@@ -18,7 +18,7 @@ const MainContainer = styled.div`
 `;
 
 const MainLayout = styled.div`
-  width: 420px;
+  width: 520px;
   box-shadow: 0 2px 12px rgb(0 0 0 / 10%);
 `;
 
