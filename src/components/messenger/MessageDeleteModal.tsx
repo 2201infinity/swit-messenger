@@ -73,6 +73,7 @@ const ModalText = styled.span`
 
 const StrongText = styled.span`
   font-weight: bold;
+  margin-left: 8px;
 `;
 
 const ModalButtonGroups = styled.div`
