@@ -48,7 +48,8 @@ const ChatRoomName = styled.div`
   align-items: center;
   font-size: ${({ theme }) => theme.fontSize.subTitle};
   color: ${({ theme }) => theme.colors.white};
-
+  justify-content: center;
+  width: calc(100% - 30px);
   img {
     border-radius: 50%;
     width: 30px;
@@ -58,7 +59,6 @@ const ChatRoomName = styled.div`
 `;
 
 const StyledIcon = styled(BackIcon)`
-  margin-right: 30px;
   width: 30px;
   height: 30px;
   cursor: pointer;
