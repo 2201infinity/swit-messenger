@@ -10,7 +10,7 @@ export interface IUserState {
 const initialState: IUserState = {
   userId: 0,
   userName: "",
-  profileImage: "",
+  profileImage: "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
 };
 
 const user = createSlice({

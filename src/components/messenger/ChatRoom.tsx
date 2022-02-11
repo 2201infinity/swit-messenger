@@ -1,20 +1,30 @@
-import styled from "styled-components";
-import ImageBox from "../common/ImageBox";
 import { Message } from "./Message";
+import React from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
-import { useState } from "react";
+import MessageInput from "components/messenger/MessageInput";
+import styled from "styled-components";
+import { useEffect, useRef, useState } from "react";
+import { userSelecter } from "stores/user";
+import { useSelector } from "react-redux";
+import ImageBox from "../common/ImageBox";
 
 export const ChatRoom = () => {
-  // const user = useSelector(userSelecter);
+  const user = useSelector(userSelecter);
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
-  const { message, messages, onChangeMessage, onDeleteMessage, onSendMessage } =
-    useMessenger();
+  const {
+    content,
+    messages,
+    onChangeMessage,
+    onDeleteMessage,
+    onKeyUp,
+    onSubmitMessage,
+  } = useMessenger();
 
-  const userId = 999888; // @Todo 로그인 구현 되면 redux에 userId 값 가져와서 넣어야함
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   const onClickDeleteButton = (message: IMessage) => {
     setSelectedMessage(message);
@@ -26,35 +36,57 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   return (
-    <ChatRoomBox>
-      {messages.map((msg: IMessage) => {
-        const { userName, profileImage, date, content } = msg;
-        return (
-          <div key={`${userName}_${content}`}>
-            <MessageBox isMyMessage={msg.userId === userId}>
+    <>
+      <ChatRoomBox>
+        {messages.map((msg: IMessage) => {
+          const { userName, profileImage, date, content, id } = msg;
+          return (
+            <MessageBox
+              isMyMessage={msg.userId === user.userId}
+              key={`${id}_${content}`}
+            >
               <ImageBox imageSrc={profileImage} />
-              <Message myMessage={false}>{content}</Message>
-              <span>{date}</span>
+              <MessageContainer isMyMessage={msg.userId === user.userId}>
+                <UserName>
+                  {userName}
+                  <span>{date}</span>
+                </UserName>
+                <Message myMessage={msg.userId === user.userId}>
+                  <div dangerouslySetInnerHTML={{ __html: content }} />
+                </Message>
+              </MessageContainer>
               <button onClick={() => onClickDeleteButton(msg)}>삭제</button>
             </MessageBox>
-          </div>
-        );
-      })}
-      {/** 임시 form */}
-      <form onSubmit={onSendMessage}>
-        <input type="text" value={message} onChange={onChangeMessage} />
-      </form>
+          );
+        })}
 
-      {isDeleteModal && selectedMessage && (
-        <MessageDeleteModal
-          isModal={isDeleteModal}
-          onToggleModal={onToggleDeleteModal}
-          onClick={() => onCompleteDelete(selectedMessage.id)}
-          content={selectedMessage.content}
-        />
-      )}
-    </ChatRoomBox>
+        <div ref={messagesEndRef} />
+        {isDeleteModal && selectedMessage && (
+          <MessageDeleteModal
+            isModal={isDeleteModal}
+            onToggleModal={onToggleDeleteModal}
+            onClick={() => onCompleteDelete(selectedMessage.id)}
+            content={selectedMessage.content}
+          />
+        )}
+      </ChatRoomBox>
+      <MessageInput
+        messages={messages}
+        onKeyUp={onKeyUp}
+        content={content}
+        onChangeMessage={onChangeMessage}
+        onSubmitMessage={onSubmitMessage}
+      />
+    </>
   );
 };
 
@@ -68,13 +100,24 @@ const ChatRoomBox = styled.div`
 const MessageBox = styled.div<{ isMyMessage: boolean }>`
   display: flex;
   flex-direction: ${(props) => (props.isMyMessage ? "row-reverse" : "row")};
-  align-items: center;
-  margin-bottom: 10px;
+  align-items: flex-start;
+  margin-bottom: 20px;
   flex-wrap: wrap;
   span {
     width: ${(props) => (props.isMyMessage ? "auto" : "100%")};
     font-size: ${({ theme }) => theme.fontSize.smallText};
     color: ${({ theme }) => theme.colors.gray};
-    margin-top: 10px;
+    margin: 0 10px;
   }
+`;
+
+const UserName = styled.p`
+  font-size: ${({ theme }) => theme.fontSize.smallText};
+  margin: 0 0 5px 10px;
+`;
+
+const MessageContainer = styled.div<{ isMyMessage: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) => (props.isMyMessage ? "flex-end" : "flex-start")};
 `;

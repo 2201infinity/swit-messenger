@@ -1,4 +1,3 @@
-import Footer from "components/Footer";
 import Header from "components/Header";
 import styled from "styled-components";
 import { ChatRoom } from "components/messenger/ChatRoom";
@@ -11,7 +10,6 @@ function MainPage() {
         <Content>
           <ChatRoom />
         </Content>
-        <Footer />
       </MainLayout>
     </MainContainer>
   );
@@ -30,8 +28,12 @@ const MainLayout = styled.div`
 
 const Content = styled.div`
   height: 100%;
-  padding-top: 65px;
+  padding: 65px 0 60px;
   background-color: #ffebee;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export default MainPage;
