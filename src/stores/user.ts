@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { rootState } from "stores";
 
 export interface IUserState {
-  userId: string;
+  userId: number;
   userName: string;
   profileImage: string;
 }
 
 const initialState: IUserState = {
-  userId: "",
+  userId: 0,
   userName: "",
   profileImage: "",
 };
