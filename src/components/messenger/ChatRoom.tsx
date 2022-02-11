@@ -1,11 +1,11 @@
 import { Message } from "./Message";
-import React from "react";
+import React, { useEffect } from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useState } from "react";
 import { userSelecter } from "stores/user";
 import { useSelector } from "react-redux";
@@ -13,9 +13,11 @@ import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
+import { useNavigate } from "react-router-dom";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
+  const navigate = useNavigate();
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
   const {
@@ -40,26 +42,35 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
+  const isMyMessage = (userId: number) => userId === user.userId;
+
+  useEffect(() => {
+    if (!user.userId) navigate("/");
+  }, [user.userId, navigate]);
+
   return (
     <ChatRoomContainer>
       <ChatHeader />
       <ChatRoomBox>
         {messages.map((msg: IMessage) => {
-          const { userName, profileImage, date, content, id } = msg;
+          const { userName, profileImage, date, content, id, userId } = msg;
+
           return (
             <MessageBox
-              isMyMessage={msg.userId === user.userId}
+              isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
               <ImageBox imageSrc={profileImage} />
-              <MessageContainer isMyMessage={msg.userId === user.userId}>
-                <UserName>
-                  {userName}
+              <MessageContainer isMyMessage={isMyMessage(userId)}>
+                <UserName className="usernameBox">
+                  <span className="name">
+                    {userName}
+                    {isMyMessage(userId) && <span>*</span>}
+                  </span>
                   <span>{date}</span>
                 </UserName>
-
-                <FlexBox>
-                  <Message myMessage={msg.userId === user.userId}>
+                <FlexBox myMessage={isMyMessage(userId)}>
+                  <Message myMessage={isMyMessage(userId)}>
                     <div dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
                   <MessageButton onClick={() => onClickDeleteButton(msg)}>
@@ -117,7 +128,6 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
   align-items: flex-start;
   margin-bottom: 20px;
   span {
-    width: ${(props) => (props.isMyMessage ? "auto" : "100%")};
     font-size: ${({ theme }) => theme.fontSize.smallText};
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
@@ -130,17 +140,29 @@ const MessageButton = styled.button`
   margin-bottom: 6px;
 `;
 
-const FlexBox = styled.div`
+const FlexBox = styled.div<{ myMessage: boolean }>`
   display: flex;
+  ${({ myMessage }) => myMessage && "flex-direction: row-reverse"}
 `;
 
 const UserName = styled.p`
   font-size: ${({ theme }) => theme.fontSize.smallText};
   margin: 0 0 5px 10px;
+  display: flex;
+  .name {
+    color: ${({ theme }) => theme.colors.black};
+  }
 `;
 
 const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.isMyMessage ? "flex-end" : "flex-start")};
+  ${({ isMyMessage }) =>
+    isMyMessage &&
+    css`
+      .usernameBox {
+        flex-direction: row-reverse;
+      }
+    `}
 `;
