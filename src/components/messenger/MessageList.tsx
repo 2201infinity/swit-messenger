@@ -30,14 +30,15 @@ function MessageList({
       {messages.map((msg: IMessage) => {
         const { userName, profileImage, date, content, id, userId, reply } =
           msg;
-        if (id === ENTRY_USER) return <JoinMessage>{content}</JoinMessage>;
+        if (id === ENTRY_USER)
+          return <JoinMessage key={`${id}_${content}`}>{content}</JoinMessage>;
         return (
           <MessageBox
             isMyMessage={isMyMessage(userId)}
             key={`${id}_${content}`}
           >
             <ImageBox imageSrc={profileImage} />
-            <MessageContainer isMyMessage={isMyMessage(userId)}>
+            <MessageContent className="messageContent">
               <UserName className="usernameBox">
                 <span className="name">
                   {userName}
@@ -45,7 +46,8 @@ function MessageList({
                 </span>
                 <span>{date}</span>
               </UserName>
-              <FlexBox myMessage={isMyMessage(userId)}>
+
+              <ContentBottom className="contentBottom">
                 <Message myMessage={isMyMessage(userId)}>
                   {reply && reply.length > 0 && (
                     <ReplyContent dangerouslySetInnerHTML={{ __html: reply }} />
@@ -56,8 +58,8 @@ function MessageList({
                   onDelete={() => onClickDeleteButton(msg)}
                   onReply={() => onReplyMessage(msg)}
                 />
-              </FlexBox>
-            </MessageContainer>
+              </ContentBottom>
+            </MessageContent>
           </MessageBox>
         );
       })}
@@ -75,7 +77,7 @@ const Container = styled.div`
 
 const MessageBox = styled.div<{ isMyMessage: boolean }>`
   display: flex;
-  flex-direction: ${(props) => (props.isMyMessage ? "row-reverse" : "row")};
+  flex-direction: row;
   align-items: flex-start;
   margin-bottom: 20px;
   span {
@@ -83,19 +85,26 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
     color: ${({ theme }) => theme.colors.gray};
     margin: 0 10px;
   }
-`;
-
-const MessageContainer = styled.div<{ isMyMessage: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: ${(props) => (props.isMyMessage ? "flex-end" : "flex-start")};
   ${({ isMyMessage }) =>
     isMyMessage &&
     css`
-      .usernameBox {
-        flex-direction: row-reverse;
+      flex-direction: row-reverse;
+      .messageContent {
+        align-items: flex-end;
+        .usernameBox {
+          flex-direction: row-reverse;
+        }
+        .contentBottom {
+          flex-direction: row-reverse;
+        }
       }
     `}
+`;
+
+const MessageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `;
 
 const UserName = styled.p`
@@ -107,9 +116,8 @@ const UserName = styled.p`
   }
 `;
 
-const FlexBox = styled.div<{ myMessage: boolean }>`
+const ContentBottom = styled.div`
   display: flex;
-  ${({ myMessage }) => myMessage && "flex-direction: row-reverse"}
 `;
 
 const ReplyContent = styled.div`
