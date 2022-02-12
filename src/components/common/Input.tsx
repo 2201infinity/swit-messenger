@@ -1,4 +1,5 @@
-import React, { useEffect, useRef } from "react";
+import useInputFocus from "hooks/useInputFocus";
+import React from "react";
 import styled from "styled-components";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -8,13 +9,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 function Input({ width, height, borderRadius = "4px", ...rest }: InputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useInputFocus();
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
   return (
     <StyledInput
       {...rest}
