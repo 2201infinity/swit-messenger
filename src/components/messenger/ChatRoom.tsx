@@ -1,5 +1,5 @@
 import { Message } from "./Message";
-import React, { useEffect } from "react";
+import React from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import useToggle from "hooks/useToggle";
@@ -13,13 +13,12 @@ import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
-import { useNavigate } from "react-router-dom";
-import { ENTRY_USER, Path } from "utils/constants";
+import { ENTRY_USER } from "utils/constants";
 import useScrollToBottom from "hooks/useScrollToBottom";
+import useCheckUserEffect from "hooks/useCheckUserEffect";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
-  const navigate = useNavigate();
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
   const {
@@ -33,6 +32,7 @@ export const ChatRoom = () => {
     textAreaRef,
     replyContent,
   } = useMessenger();
+  useCheckUserEffect();
 
   const scrollBottomRef = useScrollToBottom(messages);
 
@@ -47,10 +47,6 @@ export const ChatRoom = () => {
   };
 
   const isMyMessage = (userId: number) => userId === user.userId;
-
-  useEffect(() => {
-    if (!user.userId) navigate(Path.Home);
-  }, [user.userId, navigate]);
 
   return (
     <ChatRoomContainer>

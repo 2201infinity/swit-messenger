@@ -4,11 +4,10 @@ import { Button } from "components/common/Button";
 import Input from "components/common/Input";
 import { setUser } from "stores/user";
 import { useDispatch } from "react-redux";
-import { DanceImg } from "assets/images";
-import { LogoImg } from "assets/images";
+import { DanceImg, LogoImg } from "assets/images";
 import { useNavigate } from "react-router-dom";
 import useInput from "hooks/useInput";
-import { Path } from "utils/constants";
+import { DEFAULT_PROFILE_IMAGE, Path } from "utils/constants";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -26,8 +25,7 @@ function LoginPage() {
     const body = {
       userName: name,
       userId: Math.random(),
-      profileImage:
-        "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
+      profileImage: DEFAULT_PROFILE_IMAGE,
     };
     dispatch(setUser(body));
     navigate(Path.Chat);
