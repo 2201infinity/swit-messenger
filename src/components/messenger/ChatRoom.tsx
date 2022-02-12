@@ -52,7 +52,7 @@ export const ChatRoom = () => {
   return (
     <ChatRoomContainer>
       <ChatHeader />
-      <ChatRoomBox>
+      <ChatRoomBox ref={messagesEndRef}>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id, userId, reply } =
             msg;
@@ -92,7 +92,6 @@ export const ChatRoom = () => {
           );
         })}
 
-        <div ref={messagesEndRef} />
         {isDeleteModal && selectedMessage && (
           <MessageDeleteModal
             isModal={isDeleteModal}

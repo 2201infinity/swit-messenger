@@ -29,7 +29,7 @@ function MessageInput({
           )}
           <InputText
             onChange={onChangeMessage}
-            onKeyUp={onKeyUp}
+            onKeyPress={onKeyUp}
             value={content}
             ref={textAreaRef}
           />
@@ -76,6 +76,13 @@ const ReplyContent = styled.div`
   border-bottom: 1px solid #999;
   padding: 5px;
   font-size: 12px;
+  overflow-y: scroll;
+  min-height: 40px;
+  line-height: 1.4;
+  ${scrollbar}
+  .strong {
+    font-weight: 700;
+  }
 `;
 
 const InputText = styled.textarea`

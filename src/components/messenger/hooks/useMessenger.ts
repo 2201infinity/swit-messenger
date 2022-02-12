@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
@@ -12,10 +12,6 @@ export default function useMessenger() {
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const onSendMessage = async () => {
     if (content.trim().length === 0) return;
@@ -33,16 +29,24 @@ export default function useMessenger() {
     ]);
     setContent("");
     setReplyContent("");
-    setTimeout(() => {
-      scrollToBottom();
-    }, 10);
   };
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current?.scrollHeight;
+    }
+  }, [messages]);
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) onSendMessage();
+    if (e.shiftKey && e.key === "Enter") {
+      setContent((prev) => prev + "\n");
+    }
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { inputType } = e.nativeEvent as InputEvent;
+    if (inputType === "insertLineBreak") return;
     setContent(e.target.value);
   };
 
@@ -57,6 +61,10 @@ export default function useMessenger() {
 
     textAreaRef.current?.focus();
   };
+
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
 
   return {
     messages,
