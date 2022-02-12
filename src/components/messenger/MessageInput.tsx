@@ -22,14 +22,14 @@ function MessageInput({
 }: MessageInputProps) {
   return (
     <InputContainer>
-      <Form>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <InputBox>
           {replyContent.length > 0 && (
             <ReplyContent dangerouslySetInnerHTML={{ __html: replyContent }} />
           )}
           <InputText
             onChange={onChangeMessage}
-            onKeyUp={onKeyUp}
+            onKeyPress={onKeyUp}
             value={content}
             ref={textAreaRef}
           />
@@ -39,7 +39,7 @@ function MessageInput({
           width="55px"
           height="40px"
           onClick={onSendMessage}
-          disabled={content.length === 0}
+          disabled={content.trim().length === 0}
         >
           보내기
         </Button>
@@ -76,6 +76,13 @@ const ReplyContent = styled.div`
   border-bottom: 1px solid #999;
   padding: 5px;
   font-size: 12px;
+  overflow-y: scroll;
+  min-height: 40px;
+  line-height: 1.4;
+  ${scrollbar}
+  .strong {
+    font-weight: 700;
+  }
 `;
 
 const InputText = styled.textarea`
@@ -85,6 +92,7 @@ const InputText = styled.textarea`
   box-sizing: border-box;
   font-size: 14px;
   padding: 5px;
+  word-break: break-word;
   resize: none;
   ${scrollbar}
 `;

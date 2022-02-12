@@ -8,16 +8,18 @@ import { useSelector } from "react-redux";
 import { userSelecter } from "stores/user";
 
 export default function useMessenger() {
+  const initialReplyContent = {
+    replyId: 0,
+    content: "",
+  };
+
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
-  const [replyContent, setReplyContent] = useState<string>("");
+  const [replyContent, setReplyContent] = useState(initialReplyContent);
+
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
 
   const onSendMessage = async () => {
     if (content.trim().length === 0) return;
@@ -31,32 +33,45 @@ export default function useMessenger() {
         date: getCurrentDate(),
         content: newline(content),
         reply: replyContent,
+
       },
     ]);
     setContent("");
-    setReplyContent("");
-    setTimeout(() => {
-      scrollToBottom();
-    }, 10);
+    setReplyContent(initialReplyContent);
   };
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current?.scrollHeight;
+    }
+  }, [messages]);
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) onSendMessage();
+    if (e.shiftKey && e.key === "Enter") setContent((prev) => prev + "\n");
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { inputType } = e.nativeEvent as InputEvent;
+    if (inputType === "insertLineBreak") return;
     setContent(e.target.value);
   };
 
-  const onDeleteMessage = (messageId: number) => {
-    setMessages(messages.filter((message) => message.id !== messageId));
+  const onDeleteMessage = (message: IMessage) => {
+    setMessages(messages.filter((msg) => msg.id !== message.id));
+    if (message.id === replyContent.replyId) {
+      setReplyContent(initialReplyContent);
+    }
   };
 
   const onReplyMessage = (message: IMessage) => {
-    setReplyContent(`${message.userName}님에게 답장하기<br />
-                    ${message.content}<br />
-                    `);
-
+    setReplyContent({
+      replyId: message.id,
+      content: `${message.userName}님에게 답장하기<br />
+      ${message.content}<br />
+      (회신)<br />
+      `,
+    });
     textAreaRef.current?.focus();
   };
   useEffect(() => {

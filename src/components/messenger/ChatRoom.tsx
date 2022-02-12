@@ -39,8 +39,8 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
-  const onCompleteDelete = (messageId: number) => {
-    onDeleteMessage(messageId);
+  const onCompleteDelete = (message: IMessage) => {
+    onDeleteMessage(message);
     onToggleDeleteModal();
   };
 
@@ -53,7 +53,7 @@ export const ChatRoom = () => {
   return (
     <ChatRoomContainer>
       <ChatHeader />
-      <ChatRoomBox>
+      <ChatRoomBox ref={messagesEndRef}>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id, userId, reply } =
             msg;
@@ -81,7 +81,9 @@ export const ChatRoom = () => {
                             dangerouslySetInnerHTML={{ __html: reply }}
                           />
                         )}
-                        <div dangerouslySetInnerHTML={{ __html: content }} />
+                        <ChatText
+                          dangerouslySetInnerHTML={{ __html: content }}
+                        />
                       </Message>
                       <MessageButton>
                         <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
@@ -98,12 +100,12 @@ export const ChatRoom = () => {
             </MessageBox>
           );
         })}
-        <div ref={messagesEndRef} />
+
         {isDeleteModal && selectedMessage && (
           <MessageDeleteModal
             isModal={isDeleteModal}
             onToggleModal={onToggleDeleteModal}
-            onClick={() => onCompleteDelete(selectedMessage.id)}
+            onClick={() => onCompleteDelete(selectedMessage)}
             content={selectedMessage.content}
           />
         )}
@@ -115,7 +117,7 @@ export const ChatRoom = () => {
         onChangeMessage={onChangeMessage}
         onSendMessage={onSendMessage}
         textAreaRef={textAreaRef}
-        replyContent={replyContent}
+        replyContent={replyContent.content}
       />
     </ChatRoomContainer>
   );
@@ -149,9 +151,10 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
 `;
 
 const ReplyContent = styled.div`
-  border-bottom: 1px solid #999;
-  padding: 10px 0;
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 10px;
   margin-bottom: 10px;
+  word-break: break-word;
 `;
 
 const MessageButton = styled.button`
@@ -161,6 +164,10 @@ const MessageButton = styled.button`
   svg {
     cursor: pointer;
   }
+`;
+
+const ChatText = styled.div`
+  word-break: break-word;
 `;
 
 const FlexBox = styled.div<{ myMessage: boolean }>`
