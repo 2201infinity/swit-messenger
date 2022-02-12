@@ -27,10 +27,8 @@ function MessageDeleteModal({
     >
       <DeleteModalInner>
         <ModalText>
-          {content.replace("<br />", "").substring(0, 10)}
-          <StrongText>
-            {isElipsis && "..."} 메세지를 삭제하시겠습니까?
-          </StrongText>
+          '{content.replace("<br />", "").substring(0, 10)}
+          {isElipsis && "..."}' 메세지를 삭제하시겠습니까?
         </ModalText>
         <ModalButtonGroups>
           <Button
@@ -69,11 +67,6 @@ const ModalText = styled.span`
   flex: 1 auto;
   align-items: center;
   justify-content: center;
-`;
-
-const StrongText = styled.span`
-  font-weight: bold;
-  margin-left: 8px;
 `;
 
 const ModalButtonGroups = styled.div`
