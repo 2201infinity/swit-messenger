@@ -14,7 +14,7 @@ import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
 import { useNavigate } from "react-router-dom";
-import { ENTRY_USER } from "utils/constants";
+import { ENTRY_USER, Path } from "utils/constants";
 import useScrollToBottom from "hooks/useScrollToBottom";
 
 export const ChatRoom = () => {
@@ -49,7 +49,7 @@ export const ChatRoom = () => {
   const isMyMessage = (userId: number) => userId === user.userId;
 
   useEffect(() => {
-    if (!user.userId) navigate("/");
+    if (!user.userId) navigate(Path.Home);
   }, [user.userId, navigate]);
 
   return (

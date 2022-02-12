@@ -5,14 +5,15 @@ import { ThemeProvider } from "styled-components";
 import theme from "styles/theme";
 import MainPage from "pages/MainPage";
 import LoginPage from "pages/LoginPage";
+import { Path } from "utils/constants";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route path={Path.Home} element={<LoginPage />} />
+        <Route path={Path.Chat} element={<MainPage />} />
       </Routes>
     </ThemeProvider>
   );

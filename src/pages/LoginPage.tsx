@@ -8,6 +8,7 @@ import { DanceImg } from "assets/images";
 import { LogoImg } from "assets/images";
 import { useNavigate } from "react-router-dom";
 import useInput from "hooks/useInput";
+import { Path } from "utils/constants";
 
 function LoginPage() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function LoginPage() {
         "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
     };
     dispatch(setUser(body));
-    navigate("/main");
+    navigate(Path.Chat);
   };
 
   return (
