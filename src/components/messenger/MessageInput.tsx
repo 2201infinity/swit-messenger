@@ -39,7 +39,7 @@ function MessageInput({
           width="55px"
           height="40px"
           onClick={onSendMessage}
-          disabled={content.length === 0}
+          disabled={content.trim().length === 0}
         >
           보내기
         </Button>
