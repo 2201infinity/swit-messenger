@@ -25,7 +25,7 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
           margin-left: 10px;
         `}
   font-size: ${({ theme }) => theme.fontSize.text};
-  padding: 17px 20px;
+  padding: 12px 16px;
   border-radius: 6px;
   line-height: 1.5;
   max-width: 250px;
