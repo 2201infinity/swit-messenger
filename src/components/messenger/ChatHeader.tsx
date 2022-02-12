@@ -2,13 +2,11 @@ import { Teamlogo } from "assets/images";
 import styled from "styled-components";
 import { BackIcon } from "assets/icons";
 import { useNavigate } from "react-router-dom";
+import { Path } from "utils/constants";
 
 function ChatHeader() {
   const navigate = useNavigate();
-
-  const onBacktoLogin = () => {
-    navigate("/");
-  };
+  const onBacktoLogin = () => navigate(Path.Home);
 
   return (
     <HeaderContainer>

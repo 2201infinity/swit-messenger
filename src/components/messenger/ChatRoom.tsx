@@ -32,8 +32,8 @@ export const ChatRoom = () => {
     textAreaRef,
     replyContent,
   } = useMessenger();
-  useCheckUserEffect();
 
+  useCheckUserEffect();
   const scrollBottomRef = useScrollToBottom(messages);
 
   const onClickDeleteButton = (message: IMessage) => {
