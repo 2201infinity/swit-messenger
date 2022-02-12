@@ -55,46 +55,38 @@ export const ChatRoom = () => {
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id, userId, reply } =
             msg;
-
+          if (id === ENTRY_USER) return <JoinMessage>{content}</JoinMessage>;
           return (
             <MessageBox
               isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
-              {id !== ENTRY_USER ? (
-                <>
-                  <ImageBox imageSrc={profileImage} />
-                  <MessageContainer isMyMessage={isMyMessage(userId)}>
-                    <UserName className="usernameBox">
-                      <span className="name">
-                        {userName}
-                        {isMyMessage(userId) && <span>*</span>}
-                      </span>
-                      <span>{date}</span>
-                    </UserName>
-                    <FlexBox myMessage={isMyMessage(userId)}>
-                      <Message myMessage={isMyMessage(userId)}>
-                        {reply && reply.length > 0 && (
-                          <ReplyContent
-                            dangerouslySetInnerHTML={{ __html: reply }}
-                          />
-                        )}
-                        <ChatText
-                          dangerouslySetInnerHTML={{ __html: content }}
-                        />
-                      </Message>
-                      <MessageButton>
-                        <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
-                      </MessageButton>
-                      <MessageButton>
-                        <ReplyIcon onClick={() => onReplyMessage(msg)} />
-                      </MessageButton>
-                    </FlexBox>
-                  </MessageContainer>
-                </>
-              ) : (
-                <JoinMessage>{content}</JoinMessage>
-              )}
+              <ImageBox imageSrc={profileImage} />
+              <MessageContainer isMyMessage={isMyMessage(userId)}>
+                <UserName className="usernameBox">
+                  <span className="name">
+                    {userName}
+                    {isMyMessage(userId) && <span>*</span>}
+                  </span>
+                  <span>{date}</span>
+                </UserName>
+                <FlexBox myMessage={isMyMessage(userId)}>
+                  <Message myMessage={isMyMessage(userId)}>
+                    {reply && reply.length > 0 && (
+                      <ReplyContent
+                        dangerouslySetInnerHTML={{ __html: reply }}
+                      />
+                    )}
+                    <ChatText dangerouslySetInnerHTML={{ __html: content }} />
+                  </Message>
+                  <MessageButton>
+                    <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
+                  </MessageButton>
+                  <MessageButton>
+                    <ReplyIcon onClick={() => onReplyMessage(msg)} />
+                  </MessageButton>
+                </FlexBox>
+              </MessageContainer>
             </MessageBox>
           );
         })}
@@ -198,7 +190,8 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
 const JoinMessage = styled.p`
   margin: 0 auto;
   font-size: ${({ theme }) => theme.fontSize.text};
-  /* background-color: ${({ theme }) => theme.colors.button}; */
+  width: 265px;
+  margin-bottom: 20px;
   background-color: rgba(255, 209, 216, 0.8);
   color: ${({ theme }) => theme.colors.gray};
   text-align: center;
