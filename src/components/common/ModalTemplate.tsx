@@ -1,3 +1,4 @@
+import React, { ReactElement } from "react";
 import styled from "styled-components";
 import transitions from "styles/transitions";
 
@@ -19,7 +20,7 @@ function ModalTemplate({
   children,
   onToggleModal,
   ...rest
-}: ModalTemplateProps) {
+}: ModalTemplateProps): ReactElement {
   return (
     <ModalTemplateBlock onMouseDown={onToggleModal} {...rest}>
       <ModalInner

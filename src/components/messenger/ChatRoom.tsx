@@ -1,8 +1,6 @@
-import { Message } from "./Message";
-import React, { useEffect } from "react";
+import React, { ReactElement } from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
-import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
 import styled, { css } from "styled-components";
@@ -12,13 +10,13 @@ import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
-import { DeleteIcon, ReplyIcon } from "assets/icons";
-import { useNavigate } from "react-router-dom";
 import { ENTRY_USER } from "utils/constants";
+import ChatMessageButtons from "./ChatMessageButtons";
+import { useCheckUserEffect, useScrollToBottom, useToggle } from "hooks";
+import Message from "./Message";
 
-export const ChatRoom = () => {
+function ChatRoom(): ReactElement {
   const user = useSelector(userSelecter);
-  const navigate = useNavigate();
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
   const {
@@ -26,13 +24,15 @@ export const ChatRoom = () => {
     messages,
     onChangeMessage,
     onDeleteMessage,
-    onKeyUp,
+    onKeyPress,
     onSendMessage,
     onReplyMessage,
     textAreaRef,
-    messagesEndRef,
     replyContent,
   } = useMessenger();
+
+  useCheckUserEffect();
+  const scrollBottomRef = useScrollToBottom(messages);
 
   const onClickDeleteButton = (message: IMessage) => {
     setSelectedMessage(message);
@@ -46,57 +46,43 @@ export const ChatRoom = () => {
 
   const isMyMessage = (userId: number) => userId === user.userId;
 
-  useEffect(() => {
-    if (!user.userId) navigate("/");
-  }, [user.userId, navigate]);
-
   return (
     <ChatRoomContainer>
       <ChatHeader />
-      <ChatRoomBox ref={messagesEndRef}>
+      <ChatRoomBox ref={scrollBottomRef}>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id, userId, reply } =
             msg;
-
+          if (id === ENTRY_USER) return <JoinMessage>{content}</JoinMessage>;
           return (
             <MessageBox
               isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
-              {id !== ENTRY_USER ? (
-                <>
-                  <ImageBox imageSrc={profileImage} />
-                  <MessageContainer isMyMessage={isMyMessage(userId)}>
-                    <UserName className="usernameBox">
-                      <span className="name">
-                        {userName}
-                        {isMyMessage(userId) && <span>*</span>}
-                      </span>
-                      <span>{date}</span>
-                    </UserName>
-                    <FlexBox myMessage={isMyMessage(userId)}>
-                      <Message myMessage={isMyMessage(userId)}>
-                        {reply && reply.length > 0 && (
-                          <ReplyContent
-                            dangerouslySetInnerHTML={{ __html: reply }}
-                          />
-                        )}
-                        <ChatText
-                          dangerouslySetInnerHTML={{ __html: content }}
-                        />
-                      </Message>
-                      <MessageButton>
-                        <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
-                      </MessageButton>
-                      <MessageButton>
-                        <ReplyIcon onClick={() => onReplyMessage(msg)} />
-                      </MessageButton>
-                    </FlexBox>
-                  </MessageContainer>
-                </>
-              ) : (
-                <JoinMessage>{content}</JoinMessage>
-              )}
+              <ImageBox imageSrc={profileImage} />
+              <MessageContainer isMyMessage={isMyMessage(userId)}>
+                <UserName className="usernameBox">
+                  <span className="name">
+                    {userName}
+                    {isMyMessage(userId) && <span>*</span>}
+                  </span>
+                  <span>{date}</span>
+                </UserName>
+                <FlexBox myMessage={isMyMessage(userId)}>
+                  <Message myMessage={isMyMessage(userId)}>
+                    {reply && reply.length > 0 && (
+                      <ReplyContent
+                        dangerouslySetInnerHTML={{ __html: reply }}
+                      />
+                    )}
+                    <ChatText dangerouslySetInnerHTML={{ __html: content }} />
+                  </Message>
+                  <ChatMessageButtons
+                    onDelete={() => onClickDeleteButton(msg)}
+                    onReply={() => onReplyMessage(msg)}
+                  />
+                </FlexBox>
+              </MessageContainer>
             </MessageBox>
           );
         })}
@@ -112,7 +98,7 @@ export const ChatRoom = () => {
       </ChatRoomBox>
 
       <MessageInput
-        onKeyUp={onKeyUp}
+        onKeyPress={onKeyPress}
         content={content}
         onChangeMessage={onChangeMessage}
         onSendMessage={onSendMessage}
@@ -121,7 +107,7 @@ export const ChatRoom = () => {
       />
     </ChatRoomContainer>
   );
-};
+}
 
 const ChatRoomContainer = styled.div`
   height: 100%;
@@ -155,15 +141,6 @@ const ReplyContent = styled.div`
   padding-bottom: 10px;
   margin-bottom: 10px;
   word-break: break-word;
-`;
-
-const MessageButton = styled.button`
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 6px;
-  svg {
-    cursor: pointer;
-  }
 `;
 
 const ChatText = styled.div`
@@ -200,10 +177,13 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
 const JoinMessage = styled.p`
   margin: 0 auto;
   font-size: ${({ theme }) => theme.fontSize.text};
-  /* background-color: ${({ theme }) => theme.colors.button}; */
+  width: 265px;
+  margin-bottom: 20px;
   background-color: rgba(255, 209, 216, 0.8);
   color: ${({ theme }) => theme.colors.gray};
   text-align: center;
   padding: 10px 40px;
   border-radius: 4px;
 `;
+
+export default ChatRoom;

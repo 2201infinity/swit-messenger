@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
 
 interface ButtonStyledProps {
@@ -14,14 +14,14 @@ interface ButtonProps
   children: React.ReactNode;
 }
 
-export const Button = ({
+function Button({
   variant,
   width,
   height = "36px",
   children,
   borderRadius = "4px",
   ...rest
-}: ButtonProps): JSX.Element => {
+}: ButtonProps): ReactElement {
   return (
     <StyledButton
       variant={variant}
@@ -33,7 +33,7 @@ export const Button = ({
       {children}
     </StyledButton>
   );
-};
+}
 
 const StyledButton = styled.button<ButtonStyledProps>`
   width: ${({ width }) => width};
@@ -72,3 +72,5 @@ const StyledButton = styled.button<ButtonStyledProps>`
     }
   }};
 `;
+
+export default Button;

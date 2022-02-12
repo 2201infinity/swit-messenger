@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { ReactElement } from "react";
+import styled from "styled-components";
 
 interface IImageSrcProps {
   imageSrc: string;
 }
-function ImageBox({ imageSrc }: IImageSrcProps) {
+function ImageBox({ imageSrc }: IImageSrcProps): ReactElement {
   return (
     <Container>
       <img src={imageSrc} alt="profileImage" />

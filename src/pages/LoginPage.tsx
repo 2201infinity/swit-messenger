@@ -1,40 +1,9 @@
-import React, { FormEvent, useState } from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components";
-import { Button } from "components/common/Button";
-import Input from "components/common/Input";
-import { setUser } from "stores/user";
-import { useDispatch } from "react-redux";
-import { DanceImg } from "assets/images";
-import { LogoImg } from "assets/images";
-import { useNavigate } from "react-router-dom";
+import { DanceImg, LogoImg } from "assets/images";
+import LoginForm from "components/auth/LoginForm";
 
-function LoginPage() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [name, setName] = useState<string>("");
-
-  const onInputName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
-  const onEnter = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (name.length === 0) {
-      alert("이름을 입력해주세요");
-      return;
-    }
-
-    const body = {
-      userName: name,
-      userId: Math.random(),
-      profileImage:
-        "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
-    };
-    dispatch(setUser(body));
-    navigate("/main");
-  };
-
+function LoginPage(): ReactElement {
   return (
     <Container>
       <Content>
@@ -45,17 +14,7 @@ function LoginPage() {
           Work OS 올인원 협업툴
         </h1>
         <StyledImg src={DanceImg} alt="dance-image" />
-        <form onSubmit={onEnter}>
-          <StyledInput
-            width={"260px"}
-            height={"40px"}
-            onChange={onInputName}
-            placeholder="이름을 입력하세요"
-          />
-          <Button variant={"secondary"} width={"260px"}>
-            입장하기
-          </Button>
-        </form>
+        <LoginForm />
       </Content>
     </Container>
   );
@@ -95,8 +54,4 @@ const StyledImg = styled.img`
   border-radius: 15px;
   width: 260px;
   margin-bottom: 30px;
-`;
-
-const StyledInput = styled(Input)`
-  margin-bottom: 20px;
 `;

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { rootState } from "stores";
+import { DEFAULT_PROFILE_IMAGE } from "utils/constants";
 
 export interface IUserState {
   userId: number;
@@ -10,7 +11,7 @@ export interface IUserState {
 const initialState: IUserState = {
   userId: 0,
   userName: "",
-  profileImage: "https://i.ibb.co/vmy2PYq/83fc4c6dca8298dc8e03ba63d35a9cae.jpg",
+  profileImage: DEFAULT_PROFILE_IMAGE,
 };
 
 const user = createSlice({

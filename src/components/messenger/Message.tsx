@@ -1,15 +1,16 @@
+import React, { ReactElement } from "react";
 import styled, { css } from "styled-components";
 
-interface IMyMessageProps {
+interface MessageProps {
   myMessage?: boolean;
   children: React.ReactNode;
 }
 
-export const Message = ({ myMessage = false, children }: IMyMessageProps) => {
+function Message({ myMessage = false, children }: MessageProps): ReactElement {
   return (
     <MessageContainer isMyMessage={myMessage}>{children}</MessageContainer>
   );
-};
+}
 
 const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   ${(props) =>
@@ -31,3 +32,5 @@ const MessageContainer = styled.div<{ isMyMessage: boolean }>`
   max-width: 250px;
   margin-top: 5px;
 `;
+
+export default Message;
