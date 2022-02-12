@@ -32,7 +32,7 @@ export default function useMessenger() {
         profileImage,
         date: getCurrentDate(),
         content: newline(content),
-        reply: replyContent,
+        reply: replyContent.content,
 
       },
     ]);
