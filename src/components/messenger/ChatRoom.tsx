@@ -153,7 +153,7 @@ const ReplyContent = styled.div`
   border-bottom: 1px solid #d3d3d3;
   padding: 10px 0;
   margin-bottom: 10px;
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 const MessageButton = styled.button`
@@ -166,7 +166,7 @@ const MessageButton = styled.button`
 `;
 
 const ChatText = styled.div`
-  word-break: break-all;
+  word-break: break-word;
 `;
 
 const FlexBox = styled.div<{ myMessage: boolean }>`
