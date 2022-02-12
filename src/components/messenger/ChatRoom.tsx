@@ -38,8 +38,8 @@ export const ChatRoom = () => {
     onToggleDeleteModal();
   };
 
-  const onCompleteDelete = (messageId: number) => {
-    onDeleteMessage(messageId);
+  const onCompleteDelete = (message: IMessage) => {
+    onDeleteMessage(message);
     onToggleDeleteModal();
   };
 
@@ -104,7 +104,7 @@ export const ChatRoom = () => {
           <MessageDeleteModal
             isModal={isDeleteModal}
             onToggleModal={onToggleDeleteModal}
-            onClick={() => onCompleteDelete(selectedMessage.id)}
+            onClick={() => onCompleteDelete(selectedMessage)}
             content={selectedMessage.content}
           />
         )}
@@ -116,7 +116,7 @@ export const ChatRoom = () => {
         onChangeMessage={onChangeMessage}
         onSendMessage={onSendMessage}
         textAreaRef={textAreaRef}
-        replyContent={replyContent}
+        replyContent={replyContent.content}
       />
     </ChatRoomContainer>
   );

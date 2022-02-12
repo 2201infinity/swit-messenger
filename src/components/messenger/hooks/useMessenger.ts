@@ -6,9 +6,15 @@ import { useSelector } from "react-redux";
 import { userSelecter } from "stores/user";
 
 export default function useMessenger() {
+  const initialReplyContent = {
+    replyId: 0,
+    content: "",
+  };
+
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
-  const [replyContent, setReplyContent] = useState<string>("");
+  const [replyContent, setReplyContent] = useState(initialReplyContent);
+
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -24,11 +30,11 @@ export default function useMessenger() {
         profileImage,
         date: getCurrentDate(),
         content: content.replace(/(\n|\r\n)/g, "<br />"),
-        reply: replyContent,
+        reply: replyContent.content,
       },
     ]);
     setContent("");
-    setReplyContent("");
+    setReplyContent(initialReplyContent);
   };
 
   useEffect(() => {
@@ -48,16 +54,21 @@ export default function useMessenger() {
     setContent(e.target.value);
   };
 
-  const onDeleteMessage = (messageId: number) => {
-    setMessages(messages.filter((message) => message.id !== messageId));
+  const onDeleteMessage = (message: IMessage) => {
+    setMessages(messages.filter((msg) => msg.id !== message.id));
+    if (message.id === replyContent.replyId) {
+      setReplyContent(initialReplyContent);
+    }
   };
 
   const onReplyMessage = (message: IMessage) => {
-    setReplyContent(`${message.userName}님에게 답장하기<br />
-                    ${message.content}<br />
-                    (회신)<br />
-                    `);
-
+    setReplyContent({
+      replyId: message.id,
+      content: `${message.userName}님에게 답장하기<br />
+      ${message.content}<br />
+      (회신)<br />
+      `,
+    });
     textAreaRef.current?.focus();
   };
   useEffect(() => {
