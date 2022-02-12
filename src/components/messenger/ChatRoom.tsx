@@ -15,6 +15,7 @@ import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
 import { useNavigate } from "react-router-dom";
 import { ENTRY_USER } from "utils/constants";
+import useScrollToBottom from "hooks/useScrollToBottom";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -30,9 +31,10 @@ export const ChatRoom = () => {
     onSendMessage,
     onReplyMessage,
     textAreaRef,
-    messagesEndRef,
     replyContent,
   } = useMessenger();
+
+  const scrollBottomRef = useScrollToBottom(messages);
 
   const onClickDeleteButton = (message: IMessage) => {
     setSelectedMessage(message);
@@ -53,7 +55,7 @@ export const ChatRoom = () => {
   return (
     <ChatRoomContainer>
       <ChatHeader />
-      <ChatRoomBox ref={messagesEndRef}>
+      <ChatRoomBox ref={scrollBottomRef}>
         {messages.map((msg: IMessage) => {
           const { userName, profileImage, date, content, id, userId, reply } =
             msg;

@@ -13,13 +13,11 @@ export default function useMessenger() {
     replyId: 0,
     content: "",
   };
-
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
   const [replyContent, setReplyContent] = useState(initialReplyContent);
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
   useInputFocus(textAreaRef);
 
   const onSendMessage = async () => {
@@ -39,12 +37,6 @@ export default function useMessenger() {
     setContent("");
     setReplyContent(initialReplyContent);
   };
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollTop = messagesEndRef.current?.scrollHeight;
-    }
-  }, [messages]);
 
   const onKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     const { key, shiftKey } = e;
@@ -102,7 +94,6 @@ export default function useMessenger() {
     onSendMessage,
     onReplyMessage,
     textAreaRef,
-    messagesEndRef,
     replyContent,
   };
 }
