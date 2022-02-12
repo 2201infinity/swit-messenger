@@ -96,7 +96,7 @@ const InputText = styled.textarea`
   resize: none;
   ${scrollbar}
 `;
-const Form = styled.form`
+const Form = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
