@@ -151,7 +151,7 @@ const MessageBox = styled.div<{ isMyMessage: boolean }>`
 
 const ReplyContent = styled.div`
   border-bottom: 1px solid #d3d3d3;
-  padding: 10px 0;
+  padding-bottom: 10px;
   margin-bottom: 10px;
   word-break: break-word;
 `;
