@@ -14,6 +14,7 @@ import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { DeleteIcon, ReplyIcon } from "assets/icons";
 import { useNavigate } from "react-router-dom";
+import { ENTRY_USER } from "utils/constants";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -62,7 +63,7 @@ export const ChatRoom = () => {
               isMyMessage={isMyMessage(userId)}
               key={`${id}_${content}`}
             >
-              {id !== 9999 ? (
+              {id !== ENTRY_USER ? (
                 <>
                   <ImageBox imageSrc={profileImage} />
                   <MessageContainer isMyMessage={isMyMessage(userId)}>
