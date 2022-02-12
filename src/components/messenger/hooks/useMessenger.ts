@@ -39,9 +39,7 @@ export default function useMessenger() {
 
   const onKeyUp = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) onSendMessage();
-    if (e.shiftKey && e.key === "Enter") {
-      setContent((prev) => prev + "\n");
-    }
+    if (e.shiftKey && e.key === "Enter") setContent((prev) => prev + "\n");
   };
 
   const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -75,10 +73,6 @@ export default function useMessenger() {
         },
       ]);
   }, [userId, userName]);
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   return {
     messages,
