@@ -4,7 +4,7 @@ import { scrollbar } from "styles/utilStyles";
 import { Button } from "../common/Button";
 
 interface MessageInputProps {
-  onKeyUp: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+  onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
   content: string;
   onChangeMessage: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   onSendMessage: () => void;
@@ -13,7 +13,7 @@ interface MessageInputProps {
 }
 
 function MessageInput({
-  onKeyUp,
+  onKeyPress,
   content,
   onChangeMessage,
   onSendMessage,
@@ -29,7 +29,7 @@ function MessageInput({
           )}
           <InputText
             onChange={onChangeMessage}
-            onKeyPress={onKeyUp}
+            onKeyPress={onKeyPress}
             value={content}
             ref={textAreaRef}
           />

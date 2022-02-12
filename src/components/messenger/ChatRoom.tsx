@@ -26,7 +26,7 @@ export const ChatRoom = () => {
     messages,
     onChangeMessage,
     onDeleteMessage,
-    onKeyUp,
+    onKeyPress,
     onSendMessage,
     onReplyMessage,
     textAreaRef,
@@ -112,7 +112,7 @@ export const ChatRoom = () => {
       </ChatRoomBox>
 
       <MessageInput
-        onKeyUp={onKeyUp}
+        onKeyPress={onKeyPress}
         content={content}
         onChangeMessage={onChangeMessage}
         onSendMessage={onSendMessage}
