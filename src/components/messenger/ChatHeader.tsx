@@ -3,8 +3,9 @@ import styled from "styled-components";
 import { BackIcon } from "assets/icons";
 import { useNavigate } from "react-router-dom";
 import { Path } from "utils/constants";
+import { ReactElement } from "react";
 
-function ChatHeader() {
+function ChatHeader(): ReactElement {
   const navigate = useNavigate();
   const onBacktoLogin = () => navigate(Path.Home);
 

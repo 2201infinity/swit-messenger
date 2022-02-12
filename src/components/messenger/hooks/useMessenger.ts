@@ -6,8 +6,7 @@ import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
 import { useSelector } from "react-redux";
 import { userSelecter } from "stores/user";
-import useInputFocus from "hooks/useInputFocus";
-import useInput from "hooks/useInput";
+import { useInput, useInputFocus } from "hooks";
 
 export default function useMessenger() {
   const initialReplyContent = {

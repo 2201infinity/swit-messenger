@@ -1,7 +1,8 @@
+import ChatRoom from "components/messenger/ChatRoom";
+import { ReactElement } from "react";
 import styled from "styled-components";
-import { ChatRoom } from "components/messenger/ChatRoom";
 
-function MainPage() {
+function MainPage(): ReactElement {
   return (
     <MainContainer>
       <MainLayout>

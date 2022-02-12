@@ -1,4 +1,4 @@
-import { Button } from "components/common/Button";
+import Button from "components/common/Button";
 import React, { ReactElement } from "react";
 import styled from "styled-components";
 import ModalTemplate from "../common/ModalTemplate";

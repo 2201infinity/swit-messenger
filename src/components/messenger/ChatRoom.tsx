@@ -1,8 +1,6 @@
-import { Message } from "./Message";
-import React from "react";
+import React, { ReactElement } from "react";
 import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
-import useToggle from "hooks/useToggle";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
 import styled, { css } from "styled-components";
@@ -13,11 +11,11 @@ import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
 import { ENTRY_USER } from "utils/constants";
-import useScrollToBottom from "hooks/useScrollToBottom";
-import useCheckUserEffect from "hooks/useCheckUserEffect";
 import ChatMessageButtons from "./ChatMessageButtons";
+import { useCheckUserEffect, useScrollToBottom, useToggle } from "hooks";
+import Message from "./Message";
 
-export const ChatRoom = () => {
+function ChatRoom(): ReactElement {
   const user = useSelector(userSelecter);
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
@@ -109,7 +107,7 @@ export const ChatRoom = () => {
       />
     </ChatRoomContainer>
   );
-};
+}
 
 const ChatRoomContainer = styled.div`
   height: 100%;
@@ -187,3 +185,5 @@ const JoinMessage = styled.p`
   padding: 10px 40px;
   border-radius: 4px;
 `;
+
+export default ChatRoom;

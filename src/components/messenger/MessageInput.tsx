@@ -1,7 +1,7 @@
+import Button from "components/common/Button";
 import React from "react";
 import styled from "styled-components";
 import { scrollbar } from "styles/utilStyles";
-import { Button } from "../common/Button";
 
 interface MessageInputProps {
   onKeyPress: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
