@@ -7,6 +7,7 @@ import { getCurrentDate } from "utils/date";
 import { useSelector } from "react-redux";
 import { userSelecter } from "stores/user";
 import useInputFocus from "hooks/useInputFocus";
+import useInput from "hooks/useInput";
 
 export default function useMessenger() {
   const initialReplyContent = {
@@ -14,10 +15,10 @@ export default function useMessenger() {
     content: "",
   };
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
-  const [content, setContent] = useState<string>("");
   const [replyContent, setReplyContent] = useState(initialReplyContent);
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [content, onChangeMessage, setContent] = useInput("");
   useInputFocus(textAreaRef);
 
   const onSendMessage = async () => {
@@ -43,14 +44,6 @@ export default function useMessenger() {
     const { enter } = KeyCode;
     if (key === enter && !shiftKey) onSendMessage();
     if (shiftKey && key === enter) setContent((prev) => prev + "\n");
-  };
-
-  const onChangeMessage = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { nativeEvent } = e;
-    if (nativeEvent instanceof InputEvent) {
-      if (nativeEvent.inputType === "insertLineBreak") return;
-    }
-    setContent(e.target.value);
   };
 
   const onDeleteMessage = (message: IMessage) => {

@@ -78,6 +78,7 @@ const ReplyContent = styled.div`
   font-size: 12px;
   overflow-y: scroll;
   min-height: 40px;
+  word-break: break-word;
   line-height: 1.4;
   ${scrollbar}
   .strong {
@@ -88,7 +89,7 @@ const ReplyContent = styled.div`
 const InputText = styled.textarea`
   all: unset;
   width: 416px;
-  flex: 1 0 auto;
+  /* flex: 1 0 auto; */
   box-sizing: border-box;
   font-size: 14px;
   padding: 5px;

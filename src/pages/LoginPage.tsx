@@ -1,4 +1,4 @@
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent } from "react";
 import styled from "styled-components";
 import { Button } from "components/common/Button";
 import Input from "components/common/Input";
@@ -7,20 +7,17 @@ import { useDispatch } from "react-redux";
 import { DanceImg } from "assets/images";
 import { LogoImg } from "assets/images";
 import { useNavigate } from "react-router-dom";
+import useInput from "hooks/useInput";
 
 function LoginPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [name, onInputName] = useInput("");
 
-  const [name, setName] = useState<string>("");
-
-  const onInputName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
-  };
   const onEnter = (e: FormEvent) => {
     e.preventDefault();
 
-    if (name.length === 0) {
+    if (name.trim().length === 0) {
       alert("이름을 입력해주세요");
       return;
     }
