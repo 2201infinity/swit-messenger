@@ -12,10 +12,10 @@ import { useSelector } from "react-redux";
 import ImageBox from "../common/ImageBox";
 import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
-import { DeleteIcon, ReplyIcon } from "assets/icons";
 import { ENTRY_USER } from "utils/constants";
 import useScrollToBottom from "hooks/useScrollToBottom";
 import useCheckUserEffect from "hooks/useCheckUserEffect";
+import ChatMessageButtons from "./ChatMessageButtons";
 
 export const ChatRoom = () => {
   const user = useSelector(userSelecter);
@@ -79,12 +79,10 @@ export const ChatRoom = () => {
                     )}
                     <ChatText dangerouslySetInnerHTML={{ __html: content }} />
                   </Message>
-                  <MessageButton>
-                    <DeleteIcon onClick={() => onClickDeleteButton(msg)} />
-                  </MessageButton>
-                  <MessageButton>
-                    <ReplyIcon onClick={() => onReplyMessage(msg)} />
-                  </MessageButton>
+                  <ChatMessageButtons
+                    onDelete={() => onClickDeleteButton(msg)}
+                    onReply={() => onReplyMessage(msg)}
+                  />
                 </FlexBox>
               </MessageContainer>
             </MessageBox>
@@ -145,15 +143,6 @@ const ReplyContent = styled.div`
   padding-bottom: 10px;
   margin-bottom: 10px;
   word-break: break-word;
-`;
-
-const MessageButton = styled.button`
-  display: flex;
-  align-items: flex-end;
-  margin-bottom: 6px;
-  svg {
-    cursor: pointer;
-  }
 `;
 
 const ChatText = styled.div`
