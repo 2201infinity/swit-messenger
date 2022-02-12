@@ -61,6 +61,20 @@ export default function useMessenger() {
 
     textAreaRef.current?.focus();
   };
+  useEffect(() => {
+    userId &&
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: 9999,
+          userId: 9999,
+          userName: "",
+          profileImage: "",
+          date: getCurrentDate(),
+          content: `${userName} 님이 입장하셨습니다.`,
+        },
+      ]);
+  }, [userId, userName]);
 
   useEffect(() => {
     console.log(content);
