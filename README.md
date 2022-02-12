@@ -116,7 +116,7 @@
 ### 프로젝트 클론
 
 ```
-$ git clone https://github.com/2201infinity/request_a_quote.git
+$ git clone https://github.com/2201infinity/swit-messenger.git
 ```
 
 ### 패키지 설치
