@@ -1,12 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-export default function useInputFocus() {
-  const inputRef = useRef<HTMLInputElement>(null);
-
+export default function useInputFocus(
+  ref: React.RefObject<HTMLInputElement | HTMLTextAreaElement>
+) {
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    if (ref.current) {
+      ref.current.focus();
     }
-  }, []);
-  return inputRef;
+  }, [ref]);
 }

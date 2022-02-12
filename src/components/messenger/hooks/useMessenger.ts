@@ -6,6 +6,7 @@ import MockMessages from "utils/data.json";
 import { getCurrentDate } from "utils/date";
 import { useSelector } from "react-redux";
 import { userSelecter } from "stores/user";
+import useInputFocus from "hooks/useInputFocus";
 
 export default function useMessenger() {
   const initialReplyContent = {
@@ -16,16 +17,10 @@ export default function useMessenger() {
   const [messages, setMessages] = useState<IMessage[]>(MockMessages.messages);
   const [content, setContent] = useState<string>("");
   const [replyContent, setReplyContent] = useState(initialReplyContent);
-
   const { userId, profileImage, userName } = useSelector(userSelecter);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (textAreaRef.current) {
-      textAreaRef.current.focus();
-    }
-  }, []);
+  useInputFocus(textAreaRef);
 
   const onSendMessage = async () => {
     if (content.trim().length === 0) return;
