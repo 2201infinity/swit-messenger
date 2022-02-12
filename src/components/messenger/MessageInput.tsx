@@ -92,6 +92,7 @@ const InputText = styled.textarea`
   box-sizing: border-box;
   font-size: 14px;
   padding: 5px;
+  word-break: break-all;
   resize: none;
   ${scrollbar}
 `;
