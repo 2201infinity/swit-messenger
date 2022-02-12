@@ -64,7 +64,8 @@ function LoginPage() {
 export default LoginPage;
 
 const Container = styled.div`
-  height: 100%;
+  height: auto;
+  min-height: 100%;
   display: flex;
   justify-content: center;
 `;
