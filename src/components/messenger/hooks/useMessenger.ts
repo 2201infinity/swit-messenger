@@ -1,3 +1,5 @@
+import { newline } from "utils/newline";
+import { ENTRY_USER } from "utils/constants";
 import React, { useEffect, useRef, useState } from "react";
 import { IMessage } from "types/message";
 import MockMessages from "utils/data.json";
@@ -27,7 +29,7 @@ export default function useMessenger() {
         userName,
         profileImage,
         date: getCurrentDate(),
-        content: content.replace(/(\n|\r\n)/g, "<br />"),
+        content: newline(content),
         reply: replyContent,
       },
     ]);
@@ -62,8 +64,8 @@ export default function useMessenger() {
       setMessages((prev) => [
         ...prev,
         {
-          id: 9999,
-          userId: 9999,
+          id: ENTRY_USER,
+          userId: ENTRY_USER,
           userName: "",
           profileImage: "",
           date: getCurrentDate(),
