@@ -3,20 +3,13 @@ import { IMessage } from "types/message";
 import useMessenger from "./hooks/useMessenger";
 import MessageDeleteModal from "./MessageDeleteModal";
 import MessageInput from "components/messenger/MessageInput";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useState } from "react";
-import { userSelecter } from "stores/user";
-import { useSelector } from "react-redux";
-import ImageBox from "../common/ImageBox";
-import { scrollbar } from "styles/utilStyles";
 import ChatHeader from "components/messenger/ChatHeader";
-import { ENTRY_USER } from "utils/constants";
-import ChatMessageButtons from "./ChatMessageButtons";
 import { useCheckUserEffect, useScrollToBottom, useToggle } from "hooks";
-import Message from "./Message";
+import MessageList from "./MessageList";
 
 function ChatRoom(): ReactElement {
-  const user = useSelector(userSelecter);
   const [isDeleteModal, onToggleDeleteModal] = useToggle();
   const [selectedMessage, setSelectedMessage] = useState<null | IMessage>(null);
   const {
@@ -44,58 +37,24 @@ function ChatRoom(): ReactElement {
     onToggleDeleteModal();
   };
 
-  const isMyMessage = (userId: number) => userId === user.userId;
-
   return (
     <ChatRoomContainer>
       <ChatHeader />
-      <ChatRoomBox ref={scrollBottomRef}>
-        {messages.map((msg: IMessage) => {
-          const { userName, profileImage, date, content, id, userId, reply } =
-            msg;
-          if (id === ENTRY_USER) return <JoinMessage>{content}</JoinMessage>;
-          return (
-            <MessageBox
-              isMyMessage={isMyMessage(userId)}
-              key={`${id}_${content}`}
-            >
-              <ImageBox imageSrc={profileImage} />
-              <MessageContainer isMyMessage={isMyMessage(userId)}>
-                <UserName className="usernameBox">
-                  <span className="name">
-                    {userName}
-                    {isMyMessage(userId) && <span>*</span>}
-                  </span>
-                  <span>{date}</span>
-                </UserName>
-                <FlexBox myMessage={isMyMessage(userId)}>
-                  <Message myMessage={isMyMessage(userId)}>
-                    {reply && reply.length > 0 && (
-                      <ReplyContent
-                        dangerouslySetInnerHTML={{ __html: reply }}
-                      />
-                    )}
-                    <ChatText dangerouslySetInnerHTML={{ __html: content }} />
-                  </Message>
-                  <ChatMessageButtons
-                    onDelete={() => onClickDeleteButton(msg)}
-                    onReply={() => onReplyMessage(msg)}
-                  />
-                </FlexBox>
-              </MessageContainer>
-            </MessageBox>
-          );
-        })}
+      <MessageList
+        messages={messages}
+        scrollBottomRef={scrollBottomRef}
+        onReplyMessage={onReplyMessage}
+        onClickDeleteButton={onClickDeleteButton}
+      />
 
-        {isDeleteModal && selectedMessage && (
-          <MessageDeleteModal
-            isModal={isDeleteModal}
-            onToggleModal={onToggleDeleteModal}
-            onClick={() => onCompleteDelete(selectedMessage)}
-            content={selectedMessage.content}
-          />
-        )}
-      </ChatRoomBox>
+      {isDeleteModal && selectedMessage && (
+        <MessageDeleteModal
+          isModal={isDeleteModal}
+          onToggleModal={onToggleDeleteModal}
+          onClick={() => onCompleteDelete(selectedMessage)}
+          content={selectedMessage.content}
+        />
+      )}
 
       <MessageInput
         onKeyPress={onKeyPress}
@@ -114,76 +73,6 @@ const ChatRoomContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.lightRed};
   display: flex;
   flex-direction: column;
-`;
-
-const ChatRoomBox = styled.div`
-  background-color: transparent;
-  padding: 24px 24px 0;
-  overflow-y: scroll;
-  flex-grow: 1;
-  ${scrollbar}
-`;
-
-const MessageBox = styled.div<{ isMyMessage: boolean }>`
-  display: flex;
-  flex-direction: ${(props) => (props.isMyMessage ? "row-reverse" : "row")};
-  align-items: flex-start;
-  margin-bottom: 20px;
-  span {
-    font-size: ${({ theme }) => theme.fontSize.smallText};
-    color: ${({ theme }) => theme.colors.gray};
-    margin: 0 10px;
-  }
-`;
-
-const ReplyContent = styled.div`
-  border-bottom: 1px solid #d3d3d3;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  word-break: break-word;
-`;
-
-const ChatText = styled.div`
-  word-break: break-word;
-`;
-
-const FlexBox = styled.div<{ myMessage: boolean }>`
-  display: flex;
-  ${({ myMessage }) => myMessage && "flex-direction: row-reverse"}
-`;
-
-const UserName = styled.p`
-  font-size: ${({ theme }) => theme.fontSize.smallText};
-  margin: 0 0 5px 10px;
-  display: flex;
-  .name {
-    color: ${({ theme }) => theme.colors.black};
-  }
-`;
-
-const MessageContainer = styled.div<{ isMyMessage: boolean }>`
-  display: flex;
-  flex-direction: column;
-  align-items: ${(props) => (props.isMyMessage ? "flex-end" : "flex-start")};
-  ${({ isMyMessage }) =>
-    isMyMessage &&
-    css`
-      .usernameBox {
-        flex-direction: row-reverse;
-      }
-    `}
-`;
-
-const JoinMessage = styled.p`
-  margin: 0 auto;
-  font-size: ${({ theme }) => theme.fontSize.text};
-  width: 265px;
-  margin-bottom: 20px;
-  background-color: rgba(255, 209, 216, 0.8);
-  color: ${({ theme }) => theme.colors.gray};
-  text-align: center;
-  padding: 10px 40px;
-  border-radius: 4px;
 `;
 
 export default ChatRoom;
