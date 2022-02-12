@@ -22,7 +22,7 @@ function MessageInput({
 }: MessageInputProps) {
   return (
     <InputContainer>
-      <Form>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <InputBox>
           {replyContent.length > 0 && (
             <ReplyContent dangerouslySetInnerHTML={{ __html: replyContent }} />
@@ -96,7 +96,7 @@ const InputText = styled.textarea`
   resize: none;
   ${scrollbar}
 `;
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
