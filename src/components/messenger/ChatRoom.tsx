@@ -180,7 +180,6 @@ const UserName = styled.p`
   display: flex;
   .name {
     color: ${({ theme }) => theme.colors.black};
-    letter-spacing: 0.5px;
   }
 `;
 

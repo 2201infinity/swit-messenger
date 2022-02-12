@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyles = createGlobalStyle`
     ${reset}
@@ -10,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
     }
     body {
         font-family: 'Noto Sans KR', sans-serif;
+        letter-spacing: 0.5px;
     }
     * {
     box-sizing: border-box;
