@@ -55,6 +55,7 @@ export default function useMessenger() {
   const onReplyMessage = (message: IMessage) => {
     setReplyContent(`${message.userName}님에게 답장하기<br />
                     ${message.content}<br />
+                    (회신)<br />
                     `);
 
     textAreaRef.current?.focus();
